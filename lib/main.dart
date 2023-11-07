@@ -9,8 +9,18 @@ import 'package:p4ds/screens/main_screens/home_screen.dart';
 import 'package:p4ds/screens/main_screens/scalp_screen.dart';
 import 'package:p4ds/screens/main_screens/solutions_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure that Flutter is initialized.
+
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     MultiProvider(
       providers: [
@@ -20,6 +30,7 @@ void main() {
       child: const MyApp(),
     ),
   );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -47,3 +58,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

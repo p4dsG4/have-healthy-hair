@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget {
     final mp = Provider.of<MainProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: mp.mainPageController,
