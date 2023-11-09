@@ -1,9 +1,14 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,32 @@ class HomeScreen extends StatelessWidget {
     _ref.putString("Hello World !!");
 
 
-    return Container(
+
+    return Scaffold(
+        key: _scaffoldKey, // Scaffold에 GlobalKey를 할당합니다.
+        endDrawer: Drawer(
+        // 사이드바의 내용을 여기에 추가합니다.
+        child: ListView(
+        // 사이드바에 들어갈 메뉴 목록을 추가합니다.
+        children: [
+        DrawerHeader(
+          child: Text('Profile Settings'),
+          decoration: BoxDecoration(
+          color: Colors.blue,
+            ),
+          ),
+    ListTile(
+    title: Text('Item 1'),
+    onTap: () {
+    // 항목을 탭할 때 수행할 작업을 추가합니다.
+    Navigator.pop(context);
+    },
+    ),
+    // 여기에 더 많은 메뉴 항목을 추가할 수 있습니다.
+    ],
+    ),
+    ),
+    body: Container(
       width: 375,
       height: 812,
       clipBehavior: Clip.antiAlias,
@@ -335,7 +365,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 277,
+            left: 297,
             top: 75,
             child: Container(
               width: 79,
@@ -346,7 +376,7 @@ class HomeScreen extends StatelessWidget {
                     left: 0,
                     top: 0,
                     child: Container(
-                      width: 79,
+                      width: 49,
                       height: 37,
                       decoration: ShapeDecoration(
                         color: Colors.white,
@@ -362,6 +392,18 @@ class HomeScreen extends StatelessWidget {
                             spreadRadius: 0,
                           )
                         ],
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.account_circle_rounded),
+                        onPressed: () {
+                          if (_scaffoldKey.currentState!.isEndDrawerOpen) {
+                            // 사이드바가 열려 있으면 닫습니다.
+                            Navigator.of(context).pop();
+                          } else {
+                            // 사이드바가 닫혀 있으면 엽니다.
+                            _scaffoldKey.currentState!.openEndDrawer();
+                          }
+                        },
                       ),
                     ),
                   ),
@@ -690,6 +732,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+    )
     );
   }
 }

@@ -12,3 +12,4 @@ class SolutionsScreen extends StatelessWidget {
     );
   }
 }
+
