@@ -8,10 +8,6 @@ import 'package:p4ds/screens/scalp/scalp_1.dart';
 class ScalpScreen extends StatelessWidget {
   const ScalpScreen({super.key});
 
-  pickImage() async {
-    ImagePicker _picker = ImagePicker();
-    await _picker.pickImage(source: ImageSource.gallery);
-  }
 
   @override
   Widget build(BuildContext context) {
