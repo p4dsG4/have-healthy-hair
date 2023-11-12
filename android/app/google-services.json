@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "969862738847",
+    "project_id": "p4ds-a0e74",
+    "storage_bucket": "p4ds-a0e74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969862738847:android:9b5a415759afa20373c3aa",
+        "android_client_info": {
+          "package_name": "com.p4ds.p4ds.p4ds"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnBeaVTWc19M6NnB6WDD_HkTIDCIOVYZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
