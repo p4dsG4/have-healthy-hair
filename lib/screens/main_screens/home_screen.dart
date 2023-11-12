@@ -1,14 +1,9 @@
+import 'package:p4ds/screens/edit_profile_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,31 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-    return Scaffold(
-        key: _scaffoldKey, // Scaffold에 GlobalKey를 할당합니다.
-        endDrawer: Drawer(
-        // 사이드바의 내용을 여기에 추가합니다.
-        child: ListView(
-        // 사이드바에 들어갈 메뉴 목록을 추가합니다.
-        children: [
-        DrawerHeader(
-          child: Text('Profile Settings'),
-          decoration: BoxDecoration(
-          color: Colors.blue,
-            ),
-          ),
-    ListTile(
-    title: Text('Item 1'),
-    onTap: () {
-    // 항목을 탭할 때 수행할 작업을 추가합니다.
-    Navigator.pop(context);
-    },
-    ),
-    // 여기에 더 많은 메뉴 항목을 추가할 수 있습니다.
-    ],
-    ),
-    ),
-    body: Container(
+    return Container(
       width: 375,
       height: 812,
       clipBehavior: Clip.antiAlias,
@@ -139,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 143,
             child: Container(
               width: 343,
-              height: 212,
+              height: 230,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -147,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     width: double.infinity,
-                    height: 240,
+                    height: 230,
                     decoration: ShapeDecoration(
                       color: Color(0xFFF6F6F6),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -365,10 +336,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Positioned(
-            left: 297,
+            left: 267,
             top: 75,
             child: Container(
-              width: 79,
+              width: 100,
               height: 37,
               child: Stack(
                 children: [
@@ -376,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     left: 0,
                     top: 0,
                     child: Container(
-                      width: 49,
+                      width: 97,
                       height: 37,
                       decoration: ShapeDecoration(
                         color: Colors.white,
@@ -393,49 +364,77 @@ class _HomeScreenState extends State<HomeScreen> {
                           )
                         ],
                       ),
-                      child: IconButton(
-                        icon: Icon(Icons.account_circle_rounded),
-                        onPressed: () {
-                          if (_scaffoldKey.currentState!.isEndDrawerOpen) {
-                            // 사이드바가 열려 있으면 닫습니다.
-                            Navigator.of(context).pop();
-                          } else {
-                            // 사이드바가 닫혀 있으면 엽니다.
-                            _scaffoldKey.currentState!.openEndDrawer();
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 15,
-                    top: 13,
-                    child: Container(
-                      width: 15,
-                      height: 10,
-                      child: Stack(children: [
-
-                          ]),
-                    ),
-                  ),
-                  Positioned(
-                    left: 44,
-                    top: 6,
-                    child: Container(
-                      width: 23,
-                      height: 23,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(),
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-
+                            Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: PopupMenuButton<String>(
+                                icon: Icon(Icons.menu),
+                                offset: Offset(10, 38),
+                                onSelected: (String result) {
+                                  // 여기에 선택된 메뉴 아이템에 대한 처리를 작성합니다.
+                                },
+                                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                                  const PopupMenuItem<String>(
+                                    value: 'Item1',
+                                    child: Text('Sign Up'),
+                                    ),
+                                  const PopupMenuItem<String>(
+                                    value: 'Item2',
+                                    child: Text('Login'),
+                                    ),
+                                  ],
+                                ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: IconButton(
+                                icon: Icon(Icons.account_circle_rounded),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => EditScreenProfile()),
+                                  );
+                                },
+                              ),
+                            )
                         ],
                       ),
                     ),
                   ),
+                  // Positioned(
+                  //   left: 0,
+                  //   top: 0,
+                  //   child: Container(
+                  //     width: 10,
+                  //     height: 10,
+                  //     child: IconButton(
+                  //       icon: Icon(Icons.menu),
+                  //       onPressed: () {
+                  //
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
+                  // Positioned(
+                  //   left: 44,
+                  //   top: 6,
+                  //   child: Container(
+                  //     width: 23,
+                  //     height: 23,
+                  //     clipBehavior: Clip.antiAlias,
+                  //     decoration: BoxDecoration(),
+                  //     child: Row(
+                  //       mainAxisSize: MainAxisSize.min,
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       children: [
+                  //
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -624,11 +623,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Positioned(
             left: 62,
-            top: 197,
+            top: 187,
             child: Container(
               width: 110,
               clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: BoxDecoration(color: Color(0xFFF6F6F6)),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -642,7 +641,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  // const SizedBox(height: 16),
                   Text(
                     '두피분석',
                     textAlign: TextAlign.center,
@@ -660,7 +659,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Positioned(
             left: 226,
-            top: 197,
+            top: 187,
             child: Container(
               width: 110,
               clipBehavior: Clip.antiAlias,
@@ -678,7 +677,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  // const SizedBox(height: 16),
                   Text(
                     '헤어라인',
                     textAlign: TextAlign.center,
@@ -694,45 +693,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          Positioned(
-            left: 62,
-            top: 197,
-            child: Container(
-              width: 110,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(color: Color(0xFFF6F6F6)),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 110,
-                    height: 110,
-                    decoration: ShapeDecoration(
-                      color: Color(0xFFD9D9D9),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    '두피분석',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
-    )
     );
   }
 }
