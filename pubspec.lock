@@ -520,14 +520,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
-  responsive_sidebar:
-    dependency: "direct main"
-    description:
-      name: responsive_sidebar
-      sha256: a470353bbbe65f0e267f817232e39919b9e3969b3c53afb1e436483f9a44cdfa
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.4"
   sky_engine:
     dependency: transitive
     description: flutter

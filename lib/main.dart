@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:responsive_sidebar/responsive_sidebar.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized(); // Ensure that Flutter is initialized.
@@ -59,7 +58,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
