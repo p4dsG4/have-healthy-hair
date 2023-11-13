@@ -16,7 +16,40 @@ class MainScreen extends StatelessWidget {
     final mp = Provider.of<MainProvider>(context);
 
     return Scaffold(
-      // appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20,top:20),
+            child: IconButton(
+              icon: const Icon(Icons.account_circle_rounded, size: 48, color: Colors.grey),
+              onPressed: () {},
+            ),
+          ),
+        ],
+        toolbarHeight: 70, // default is 56
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.transparent,
+        title: GestureDetector(
+          onTap: () {
+            mp.onChangeMainScreenIndex(0);
+
+            // Add navigation to the home screen here
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => MainScreen()),
+            );
+
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top:20), // Adjust the padding as needed
+            child: Container(
+              width: 60,
+              child: Image.asset('assets/images/logo.png'),
+            ),
+          ),        ),
+      ),
+
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: mp.mainPageController,
@@ -62,7 +95,7 @@ class MainScreen extends StatelessWidget {
                       height: 24,
                     ),
                     Text(
-                      '이윤석',
+                      'Group4',
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
