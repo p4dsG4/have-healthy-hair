@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p4ds/screens/solution/survey_1.dart';
 
 class SolutionsScreen extends StatelessWidget {
   const SolutionsScreen({super.key});
@@ -95,7 +96,10 @@ class SolutionsScreen extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Survey1Screen())
+                );
               },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(

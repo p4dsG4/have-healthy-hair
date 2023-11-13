@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:p4ds/screens/scalp/scalp_2.dart';
-
+import 'package:p4ds/screens/solution/survey_2.dart';
 
 
 class Survey1Screen extends StatelessWidget {
-  const survey1Screen({super.key});
+  const Survey1Screen({super.key});
 
-  pickImage() async {
-    ImagePicker _picker = ImagePicker();
-    await _picker.pickImage(source: ImageSource.gallery);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,127 +29,262 @@ class Survey1Screen extends StatelessWidget {
       child: Container(
         color: Colors.white,
         child: ListView(children: [
-            // Row(
-            //     children: [
-            //       Positioned(
-            //         left: 16,
-            //         top: 39,
-            //         child: Container(
-            //           width: 60.62,
-            //           height: 77,
-            //           child: Stack(
-            //             children: [
-            //               Positioned(
-            //                 left: 46.39,
-            //                 top: 0,
-            //                 child: Transform(
-            //                   transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
-            //                   child: Container(
-            //                       width: 42.39,
-            //                       height: 33.07,
-            //                       child: Image.asset('assets/images/home/scalppic.png')
-            //
-            //                   ),
-            //                 ),
-            //               ),
-            //               Positioned(
-            //                 left: 0,
-            //                 top: 13.41,
-            //                 child: Container(
-            //                     width: 60.62,
-            //                     height: 63.59,
-            //                     child: Image.asset('assets/images/logo.png')
-            //
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ), //logo
-            //     ]
-            // ),
             Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center, // Align children in the center horizontally
+              children: [
+                SizedBox(height: 40),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    '나의 두피 상태를 선택해주세요.',
+                    style: TextStyle(
+                      color: Color(0xFF23262F),
+                      fontSize: 18,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.bold,
+                      height: 0.17,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 40),//Text: Check your scalp condition
+            Container(
+            height: 100,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0, right: 30.0), // Adjust the padding as needed
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      '',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
+                  Container(
+                    width: 100,
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Your onPressed logic here
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                      ),
+                      child: Text(
+                        "양호".toUpperCase(),
+                        style: TextStyle(fontSize: 18, color: Colors.black87,),
                       ),
                     ),
                   ),
-                  // SizedBox(height: 10),
-                  Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        'Please upload a photo of the indicated area shown below.',
-                        style: TextStyle(
-                          color: Color(0xFF23262F),
-                          fontSize: 13,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                          height: 0.17,
+                  Container(
+                    width: 100,
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Your onPressed logic here
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                          ),
                         ),
-                      )
-                  )
-                ]
-            ),
-            SizedBox(height: 40),//Text: Check your scalp condition
-            Positioned(
-              left: 17,
-              top: 143,
-              child: Container(
-                width: 343,
-                height: 250,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        width: double.infinity,
-                        height: 180,
-                        child: Image.asset('assets/images/scalp/ex1.png')
-
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: ElevatedButton(
-                onPressed: () => pickImage(),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.white),
+                        minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                      ),
+                      child: Text(
+                        "건성".toUpperCase(),
+                        style: TextStyle(fontSize: 18, color: Colors.black87,),
+                      ),
                     ),
                   ),
-                  minimumSize: MaterialStateProperty.all(Size(320, 160)), // Adjust the width and height as needed
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF6F6F6)), // Set the background color to light green
-                ),
-                child: Text(
-                  "Click to upload".toUpperCase(),
-                  style: TextStyle(fontSize: 16, color: Colors.grey,),
-                  // You can adjust the font size here
-                ),
+                ],
               ),
             ),
+          ),
+            Container(
+            height: 100,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0, right: 30.0), // Adjust the padding as needed
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Your onPressed logic here
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                      ),
+                      child: Text(
+                        "지성".toUpperCase(),
+                        style: TextStyle(fontSize: 18, color: Colors.black87,),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Your onPressed logic here
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                      ),
+                      child: Text(
+                        "민감성".toUpperCase(),
+                        style: TextStyle(fontSize: 18, color: Colors.black87,),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+            Container(
+            height: 100,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0, right: 30.0), // Adjust the padding as needed
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Your onPressed logic here
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                      ),
+                      child: Text(
+                        "지루성".toUpperCase(),
+                        style: TextStyle(fontSize: 18, color: Colors.black87,),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Your onPressed logic here
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                      ),
+                      child: Text(
+                        "염증성".toUpperCase(),
+                        style: TextStyle(fontSize: 18, color: Colors.black87,),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+            Container(
+            height: 100,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0, right: 30.0), // Adjust the padding as needed
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Your onPressed logic here
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                      ),
+                      child: Text(
+                        "비듬성".toUpperCase(),
+                        style: TextStyle(fontSize: 18, color: Colors.black87,),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 70,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Your onPressed logic here
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                      ),
+                      child: Text(
+                        "탈모성".toUpperCase(),
+                        style: TextStyle(fontSize: 18, color: Colors.black87,),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
             SizedBox(height: 40),//Text: Check your scalp condition
             Center(
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Scalp2Screen() )
+                      MaterialPageRoute(builder: (context) => const Survey2Screen() )
                   );
                 },
                 style: ButtonStyle(
@@ -165,7 +294,7 @@ class Survey1Screen extends StatelessWidget {
                       side: BorderSide(color: Colors.green),
                     ),
                   ),
-                  minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                  minimumSize: MaterialStateProperty.all(Size(280, 50)), // Adjust the width and height as needed
                   backgroundColor: MaterialStateProperty.all<Color>(Colors.green), // Set the background color to light green
                 ),
                 child: Text(
@@ -174,24 +303,6 @@ class Survey1Screen extends StatelessWidget {
                 ),
               ),
             ),
-            // Center(
-            //   child: DottedBorder(
-            //
-            //     color: Colors.black,
-            //     dashPattern: [6, 6, 6, 6],
-            //     strokeWidth: 1,
-            //     radius: Radius.circular(12),
-            //     padding: EdgeInsets.all(6),
-            //     child: Text(
-            //       "Click to upload".toUpperCase(),
-            //       style: TextStyle(fontSize: 16, color: Colors.grey,),
-            //       // You can adjust the font size here
-            //     ),
-            //   ),
-            //
-            // )
-
-
 
           ])
 

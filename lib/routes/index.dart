@@ -15,5 +15,13 @@ class Routes {
   static const String scalp3 ='/scalp_screens/scalp3';
   static const String scalp4 ='/scalp_screens/scalp4';
   static const String scalpResult ='/scalp_screens/scalpResult';
+
+  // solution screens
+  static const String survey1 = '/solution_screens/survey1';
+  static const String survey2 = '/solution_screens/survey2';
+  static const String survey3 = '/solution_screens/survey3';
+  static const String survey4 = '/solution_screens/survey4';
+  static const String solutionResult = '/solution_screens/solution_result';
+
 }
 
