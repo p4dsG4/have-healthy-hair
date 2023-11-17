@@ -8,6 +8,8 @@ class Survey1Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var checked = false;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70, // default is 56
@@ -32,24 +34,29 @@ class Survey1Screen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center, // Align children in the center horizontally
               children: [
-                SizedBox(height: 40),
+                // SizedBox(height: 40),
                 Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    '나의 두피 상태를 선택해주세요.',
-                    style: TextStyle(
-                      color: Color(0xFF23262F),
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.bold,
-                      height: 0.17,
+                  padding: EdgeInsets.all(25),
+                  child: Container(
+                    width: 250, // Set the desired width
+                    child: Text(
+                      '나의 두피 상태를 선택해주세요. (최대 세개까지 선택)',
+                      style: TextStyle(
+                        color: Color(0xFF23262F),
+                        fontSize: 18,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.bold,
+                        height: 1.5,
+                      ),
+                      softWrap: true, // Enable text wrapping
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
+
                 )
               ],
             ),
-            SizedBox(height: 40),//Text: Check your scalp condition
+            // SizedBox(height: 40),//Text: Check your scalp condition
             Container(
             height: 100,
             child: Padding(
@@ -68,7 +75,7 @@ class Survey1Screen extends StatelessWidget {
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Color(0xFFF6F6F6)),
+                            side: BorderSide(color: Color(checked? 0xFFF6F6F6: 0x000FFFF)),
                           ),
                         ),
                         minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed

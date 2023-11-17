@@ -5,10 +5,7 @@ import 'package:p4ds/screens/main_screens/hairline_screens.dart';
 import 'package:p4ds/screens/main_screens/home_screen.dart';
 import 'package:p4ds/screens/main_screens/scalp_screen.dart';
 import 'package:p4ds/screens/main_screens/solutions_screen.dart';
-import 'package:p4ds/screens/Profile/profile.dart';
 import 'package:provider/provider.dart';
-import 'package:p4ds/screens/custom_appbar.dart';
-
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -25,12 +22,7 @@ class MainScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 20,top:20),
             child: IconButton(
               icon: const Icon(Icons.account_circle_rounded, size: 48, color: Colors.grey),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Profile() )
-                );
-              },
+              onPressed: () {},
             ),
           ),
         ],
@@ -57,6 +49,7 @@ class MainScreen extends StatelessWidget {
             ),
           ),        ),
       ),
+
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: mp.mainPageController,

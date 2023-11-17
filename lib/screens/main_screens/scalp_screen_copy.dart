@@ -7,7 +7,7 @@ import 'package:p4ds/providers/main_provider.dart';
 import 'package:p4ds/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:p4ds/screens/main_screen.dart';
-import 'package:p4ds/screens/custom_appbar.dart';
+
 
 class ScalpScreen extends StatelessWidget {
   const ScalpScreen({super.key});
@@ -17,25 +17,49 @@ class ScalpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final up = Provider.of<UserProvider>(context);
     final mp = Provider.of<MainProvider>(context);
-    return  Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(70), // Adjust the height as needed
-      //   child: CustomAppBar(
-      //     onBackButtonPressed: () {
-      //       // Handle back button press if needed
-      //     },
-      //     onLogoTap: () {
-      //       // Handle logo tap here, navigate to the home screen
-      //       mp.onChangeMainScreenIndex(0);
-      //       Navigator.pop(context); // Use Navigator.pop() to go back to MainScreen
-      //
-      //     },
-      //   ),
-      // ),
-      body: SafeArea(
+    return  SafeArea(
           child: Container (
               color: Colors.white,
               child: ListView(children: [
+                // Row(
+                //     children: [
+                //       Positioned(
+                //         left: 16,
+                //         top: 39,
+                //         child: Container(
+                //           width: 60.62,
+                //           height: 77,
+                //           child: Stack(
+                //             children: [
+                //               Positioned(
+                //                 left: 46.39,
+                //                 top: 0,
+                //                 child: Transform(
+                //                   transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
+                //                   child: Container(
+                //                       width: 42.39,
+                //                       height: 33.07,
+                //                       child: Image.asset('assets/images/home/scalppic.png')
+                //
+                //                   ),
+                //                 ),
+                //               ),
+                //               Positioned(
+                //                 left: 0,
+                //                 top: 13.41,
+                //                 child: Container(
+                //                     width: 60.62,
+                //                     height: 63.59,
+                //                     child: Image.asset('assets/images/logo.png')
+                //
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ), //logo
+                //     ]
+                // ),
                 SizedBox(height: 25),
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,12 +80,12 @@ class ScalpScreen extends StatelessWidget {
                       ),
                       // SizedBox(height: 10),
                       Padding(
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(10),
                           child: Text(
                             'Upload photos of your scalp.',
                             style: TextStyle(
                               color: Color(0xFF23262F),
-                              fontSize: 15,
+                              fontSize: 12,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w500,
                               height: 0.17,
@@ -110,12 +134,12 @@ class ScalpScreen extends StatelessWidget {
                     )), //두피 부위 사진 4개
                 SizedBox(height: 25),
                 Padding(
-                    padding: EdgeInsets.only(top:10, left: 20),
+                    padding: EdgeInsets.all(10),
                     child: Text(
                       'Examples of scalp photo: ',
                       style: TextStyle(
                         color: Color(0xFF23262F),
-                        fontSize: 15,
+                        fontSize: 12,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
                         height: 0.17,
@@ -174,8 +198,6 @@ class ScalpScreen extends StatelessWidget {
 
               ])
           )
-
-      ),
 
     );
 

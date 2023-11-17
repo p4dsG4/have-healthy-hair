@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:p4ds/screens/solution/survey_5.dart';
+import 'package:p4ds/screens/solution/survey_6.dart';
 
 
-class Survey4Screen extends StatelessWidget {
-  const Survey4Screen({super.key});
+class Survey5Screen extends StatelessWidget {
+  const Survey5Screen({super.key});
 
 
   @override
@@ -36,9 +36,9 @@ class Survey4Screen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(25),
                     child: Container(
-                      width: 400, // Set the desired width
+                      width: 280, // Set the desired width
                       child: Text(
-                        '샴푸 사용 빈도를 선택하세요.',
+                        '펌 주기를 선택하세요.',
                         style: TextStyle(
                           color: Color(0xFF23262F),
                           fontSize: 18,
@@ -80,7 +80,7 @@ class Survey4Screen extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
                           ),
                           child: Text(
-                            "하루 한 번".toUpperCase(),
+                            "안해요".toUpperCase(),
                             style: TextStyle(fontSize: 18, color: Colors.black87,),
                           ),
                         ),
@@ -114,7 +114,7 @@ class Survey4Screen extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
                           ),
                           child: Text(
-                            "하루 두 번".toUpperCase(),
+                            "1번".toUpperCase(),
                             style: TextStyle(fontSize: 18, color: Colors.black87,),
                           ),
                         ),
@@ -148,7 +148,7 @@ class Survey4Screen extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
                           ),
                           child: Text(
-                            "하루 두 번 이상".toUpperCase(),
+                            "3번 미만".toUpperCase(),
                             style: TextStyle(fontSize: 18, color: Colors.black87,),
                           ),
                         ),
@@ -182,7 +182,7 @@ class Survey4Screen extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
                           ),
                           child: Text(
-                            "2~3일에 한번".toUpperCase(),
+                            "3번 이상".toUpperCase(),
                             style: TextStyle(fontSize: 18, color: Colors.black87,),
                           ),
                         ),
@@ -197,7 +197,7 @@ class Survey4Screen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Survey5Screen() )
+                        MaterialPageRoute(builder: (context) => const Survey6Screen() )
                     );
                   },
                   style: ButtonStyle(

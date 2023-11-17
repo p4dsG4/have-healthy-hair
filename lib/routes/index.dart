@@ -8,6 +8,10 @@ class Routes {
 
   // profile screens
   static const String editProfileScreen = '/profile/edit';
+  static const String profile = '/profile_screens/profile';
+  static const String scalpRecords = '/profile_screens/scalp_records';
+  static const String wishlist = '/profile_screens/wishlist';
+
 
   // scalp screens
   static const String scalp1 ='/scalp_screens/scalp1';
@@ -21,7 +25,14 @@ class Routes {
   static const String survey2 = '/solution_screens/survey2';
   static const String survey3 = '/solution_screens/survey3';
   static const String survey4 = '/solution_screens/survey4';
+  static const String survey5 = '/solution_screens/survey5';
+  static const String survey6 = '/solution_screens/survey6';
+  static const String survey7 = '/solution_screens/survey7';
   static const String solutionResult = '/solution_screens/solution_result';
 
+  //products screens
+  static const String clinic = '/products_screens/clinics';
+  static const String shampoo = '/products_screens/shampoos';
+  static const String shampooDetail = '/products_screens/shampoo_detail';
 }
 

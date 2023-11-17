@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:p4ds/screens/Profile/scalp_records.dart';
+
 
 
 class ScalpResultScreen extends StatelessWidget {
   const ScalpResultScreen({super.key});
-
-  pickImage() async {
-    ImagePicker _picker = ImagePicker();
-    await _picker.pickImage(source: ImageSource.gallery);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +20,7 @@ class ScalpResultScreen extends StatelessWidget {
             icon: Icon(Icons.arrow_back, color: Colors.black54),
             onPressed: () {
               // Navigate back when the back arrow is tapped
-              Navigator.pop(context);
+              Navigator.of(context).popUntil((route)=>route.isFirst);
             },
           ),
         ),
@@ -66,32 +62,189 @@ class ScalpResultScreen extends StatelessWidget {
                       )
                     ]
                 ),
-                SizedBox(height: 40),//Text: Check your scalp condition
+                SizedBox(height: 20),
                 Positioned(
-                  left: 17,
-                  top: 143,
+                  left: 100,
+                  top: 100,
                   child: Container(
-                    width: 343,
+                    width: 100,
                     height: 250,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Stack(
                       children: [
-                        Container(
-                            width: double.infinity,
-                            height: 180,
-                            child: Image.asset('assets/images/home/scalppic.png')
-
+                        Positioned(
+                          left: 25, // Adjust the left position of the image
+                          top: 0, // Adjust the top position of the image
+                          child: Image.asset(
+                            'assets/images/home/head.png', // Your image
+                            width: 300, // Set the desired width of the image
+                            height: 250, // Set the desired height of the image
+                          ),
                         ),
+                        Positioned(
+                          left: 70, // Adjust the left position of the box
+                          top: 70, // Adjust the top position of the box
+                          child: Container(
+                            width: 70, // Set the width of the box
+                            height: 70, // Set the height of the box
+                            color: Colors.red.withOpacity(0.5), // Set the color of the box
+                          ),
+                        ),
+                        Positioned(
+                          left: 220, // Adjust the left position of the box
+                          top: 70, // Adjust the top position of the box
+                          child: Container(
+                            width: 70, // Set the width of the box
+                            height: 70, // Set the height of the box
+                            color: Colors.lightGreen.withOpacity(0.5), // Set the color of the box
+                          ),
+                        ),
+                        Positioned(
+                          left: 145, // Adjust the left position of the box
+                          top: 0, // Adjust the top position of the box
+                          child: Container(
+                            width: 70, // Set the width of the box
+                            height: 70, // Set the height of the box
+                            color: Colors.yellow.withOpacity(0.5), // Set the color of the box
+                          ),
+                        ),
+                        Positioned(
+                          left: 145, // Adjust the left position of the box
+                          top: 100, // Adjust the top position of the box
+                          child: Container(
+                            width: 70, // Set the width of the box
+                            height: 70, // Set the height of the box
+                            color: Colors.orange.withOpacity(0.5), // Set the color of the box
+                          ),
+                        ),
+
                       ],
                     ),
                   ),
                 ),
+                SizedBox(height: 30),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Padding(
+                          padding: EdgeInsets.only(top:15,left:35,bottom: 15),
+                          child: Text(
+                            '미세각질 ',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.7),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              height: 0.17,
+                            ),
+                          )
+                      )
+                    ]
+                ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Padding(
+                          padding: EdgeInsets.only(top:15,left:35,bottom: 15),
+                          child: Text(
+                            '피지과다 ',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.7),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              height: 0.17,
+                            ),
+                          )
+                      )
+                    ]
+                ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Padding(
+                          padding: EdgeInsets.only(top:15,left:35,bottom: 15),
+                          child: Text(
+                            '모낭사이홍반 ',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.7),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              height: 0.17,
+                            ),
+                          )
+                      )
+                    ]
+                ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Padding(
+                          padding: EdgeInsets.only(top:15,left:35,bottom: 15),
+                          child: Text(
+                            '모낭홍반/농포 ',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.7),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              height: 0.17,
+                            ),
+                          )
+                      )
+                    ]
+                ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Padding(
+                          padding: EdgeInsets.only(top:15,left:35,bottom: 15),
+                          child: Text(
+                            '비듬 ',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.7),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              height: 0.17,
+                            ),
+                          )
+                      )
+                    ]
+                ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Padding(
+                          padding: EdgeInsets.only(top:15,left:35,bottom: 15),
+                          child: Text(
+                            '탈모 ',
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.7),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                              height: 0.17,
+                            ),
+                          )
+                      )
+                    ]
+                ),
+                SizedBox(height: 10),
 
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ScalpRecordsScreen() )
+                      );
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -109,22 +262,6 @@ class ScalpResultScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Center(
-                //   child: DottedBorder(
-                //
-                //     color: Colors.black,
-                //     dashPattern: [6, 6, 6, 6],
-                //     strokeWidth: 1,
-                //     radius: Radius.circular(12),
-                //     padding: EdgeInsets.all(6),
-                //     child: Text(
-                //       "Click to upload".toUpperCase(),
-                //       style: TextStyle(fontSize: 16, color: Colors.grey,),
-                //       // You can adjust the font size here
-                //     ),
-                //   ),
-                //
-                // )
 
 
 

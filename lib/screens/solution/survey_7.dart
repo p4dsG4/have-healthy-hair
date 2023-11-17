@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:p4ds/screens/solution/survey_5.dart';
+import 'package:p4ds/screens/solution/solution_result.dart';
 
 
-class Survey4Screen extends StatelessWidget {
-  const Survey4Screen({super.key});
+class Survey7Screen extends StatelessWidget {
+  const Survey7Screen({super.key});
 
 
   @override
@@ -36,9 +36,9 @@ class Survey4Screen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(25),
                     child: Container(
-                      width: 400, // Set the desired width
+                      width: 280, // Set the desired width
                       child: Text(
-                        '샴푸 사용 빈도를 선택하세요.',
+                        '선호하는 제품의 특징을 선택하세요. (최대 두가지 선택)',
                         style: TextStyle(
                           color: Color(0xFF23262F),
                           fontSize: 18,
@@ -54,7 +54,7 @@ class Survey4Screen extends StatelessWidget {
 
                 ],
               ),
-              SizedBox(height: 40),//Text: Check your scalp condition
+              // SizedBox(height: 40),//Text: Check your scalp condition
               Container(
                 height: 100,
                 child: Padding(
@@ -63,7 +63,7 @@ class Survey4Screen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        width: 300,
+                        width: 120,
                         height: 70,
                         child: ElevatedButton(
                           onPressed: () {
@@ -80,7 +80,30 @@ class Survey4Screen extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
                           ),
                           child: Text(
-                            "하루 한 번".toUpperCase(),
+                            "없음".toUpperCase(),
+                            style: TextStyle(fontSize: 18, color: Colors.black87,),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        height: 70,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Your onPressed logic here
+                          },
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Color(0xFFF6F6F6)),
+                              ),
+                            ),
+                            minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                          ),
+                          child: Text(
+                            "세정력".toUpperCase(),
                             style: TextStyle(fontSize: 18, color: Colors.black87,),
                           ),
                         ),
@@ -97,7 +120,7 @@ class Survey4Screen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        width: 300,
+                        width: 120,
                         height: 70,
                         child: ElevatedButton(
                           onPressed: () {
@@ -114,7 +137,30 @@ class Survey4Screen extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
                           ),
                           child: Text(
-                            "하루 두 번".toUpperCase(),
+                            "쿨링감".toUpperCase(),
+                            style: TextStyle(fontSize: 18, color: Colors.black87,),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        height: 70,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Your onPressed logic here
+                          },
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Color(0xFFF6F6F6)),
+                              ),
+                            ),
+                            minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                          ),
+                          child: Text(
+                            "탈모 특화".toUpperCase(),
                             style: TextStyle(fontSize: 18, color: Colors.black87,),
                           ),
                         ),
@@ -131,7 +177,7 @@ class Survey4Screen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        width: 300,
+                        width: 120,
                         height: 70,
                         child: ElevatedButton(
                           onPressed: () {
@@ -148,7 +194,30 @@ class Survey4Screen extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
                           ),
                           child: Text(
-                            "하루 두 번 이상".toUpperCase(),
+                            "보습력".toUpperCase(),
+                            style: TextStyle(fontSize: 18, color: Colors.black87,),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 120,
+                        height: 70,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Your onPressed logic here
+                          },
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Color(0xFFF6F6F6)),
+                              ),
+                            ),
+                            minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
+                            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
+                          ),
+                          child: Text(
+                            "머릿결".toUpperCase(),
                             style: TextStyle(fontSize: 18, color: Colors.black87,),
                           ),
                         ),
@@ -165,7 +234,7 @@ class Survey4Screen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        width: 300,
+                        width: 120,
                         height: 70,
                         child: ElevatedButton(
                           onPressed: () {
@@ -182,10 +251,14 @@ class Survey4Screen extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF3F2F2)), // Set the background color
                           ),
                           child: Text(
-                            "2~3일에 한번".toUpperCase(),
+                            "향기".toUpperCase(),
                             style: TextStyle(fontSize: 18, color: Colors.black87,),
                           ),
                         ),
+                      ),
+                      Container(
+                        width: 120,
+                        height: 70,
                       ),
                     ],
                   ),
@@ -197,7 +270,7 @@ class Survey4Screen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Survey5Screen() )
+                        MaterialPageRoute(builder: (context) => const SolutionResultScreen() )
                     );
                   },
                   style: ButtonStyle(

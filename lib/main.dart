@@ -9,6 +9,9 @@ import 'package:p4ds/screens/main_screens/home_screen.dart';
 import 'package:p4ds/screens/main_screens/scalp_screen.dart';
 import 'package:p4ds/screens/main_screens/solutions_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:p4ds/screens/Profile/profile.dart';
+import 'package:p4ds/screens/Profile/scalp_records.dart';
+import 'package:p4ds/screens/Profile/Wishlist.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -53,6 +56,9 @@ class MyApp extends StatelessWidget {
 
         // Profile
         Routes.editProfileScreen: (context) => const EditScreenProfile(),
+        Routes.profile: (context) => const Profile(),
+        Routes.scalpRecords: (context) => const ScalpRecordsScreen(),
+        Routes.wishlist: (context) => const WishlistScreen(),
       },
       initialRoute: Routes.mainScreen,
     );
