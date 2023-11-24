@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:p4ds/models/clinic.dart';
+import 'package:p4ds/models/shampoo.dart';
 import 'package:p4ds/screens/Profile/scalp_records.dart';
 
 
 
-class ClinicDetailScreen extends StatelessWidget {
-  final Clinic clinic;
-  const ClinicDetailScreen({super.key, required this.clinic});
+class ShampooDetailScreen extends StatelessWidget {
+  final Products product;
+  const ShampooDetailScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class ClinicDetailScreen extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.only(left:20),
                         child: Text(
-                          clinic.name ?? "Unknown",
+                          product.reviewCnt ?? "Unknown",
                           style: TextStyle(
                             color: Color(0xFF23262F),
                             fontSize: 20,
@@ -185,7 +185,7 @@ class ClinicDetailScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: 10, left: 20),
                         child: Text(
-                          clinic.address ?? "Unknown",
+                          product.reviewCnt ?? "Unknown",
                           style: TextStyle(
                             color: Color(0xFF23262F),
                             fontSize: 15,
@@ -226,7 +226,7 @@ class ClinicDetailScreen extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.only(top:10,left:30),
                         child: Text(
-                          clinic.phone ?? "Unknown",
+                          product.reviewCnt ?? "Unknown",
                           style: TextStyle(
                             color: Color(0xFF23262F),
                             fontSize: 15,
