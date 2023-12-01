@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ShampooRepository {
+class ProductRepository {
   final CollectionReference collection = FirebaseFirestore.instance.collection('products');
 
   Stream<QuerySnapshot> getStream() {

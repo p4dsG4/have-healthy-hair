@@ -1,15 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:p4ds/screens/scalp/scalp_4.dart';
+import '../../repo/image_storage.dart';
+import 'package:intl/intl.dart';
+
+class ImageUploadWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ImageUploadState();
+
+}
+
+class _ImageUploadState extends State<ImageUploadWidget> {
+  bool imageUpload = false;
+  String uploadImageUrl = "";
+  bool uploading = false; // New state variable to track uploading progress
+
+  void imageUploadStarted() {
+    setState(() {
+      uploading = true; // Set uploading to true when image upload starts
+    });
+  }
+
+  pickImage() async {
+    setState(() {
+      uploading = true; // Set uploading to true when pickImage is called
+    });
+
+    final formattedDate = DateFormat('yyyyMMdd').format(DateTime.now()); // Format the current date
+    final imageName = 'right_$formattedDate'; // Construct the imageName using the formatted date
+
+    ImageStorage.uploadImageToFirebase(path: "user1/Scalp", imageName: imageName, uploadStartCallback: imageUploadStarted).then((url) {
+      setState(() {
+        imageUpload = true;
+        uploadImageUrl = url;
+        uploading = false; // Set uploading to false when the upload is complete
+      });
+      print(url);
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => pickImage(),
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            side: BorderSide(color: Colors.white),
+          ),
+        ),
+        minimumSize: MaterialStateProperty.all(Size(320, 160)), // Adjust the width and height as needed
+        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF6F6F6)), // Set the background color to light green
+      ),
+      child: uploading
+          ? CircularProgressIndicator() // Show CircularProgressIndicator while uploading
+          : imageUpload
+          ? Image.network(
+        uploadImageUrl,
+        width: 100,
+        height: 100,
+      )
+          : Text(
+        "Click to upload".toUpperCase(),
+        style: TextStyle(fontSize: 16, color: Colors.grey,),
+        // You can adjust the font size here
+      ),
+    );
+  }
+}
+
 
 
 class Scalp3Screen extends StatelessWidget {
   const Scalp3Screen({super.key});
-
-  pickImage() async {
-    ImagePicker _picker = ImagePicker();
-    await _picker.pickImage(source: ImageSource.gallery);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,24 +155,7 @@ class Scalp3Screen extends StatelessWidget {
                 ),
               ),
               Center(
-                child: ElevatedButton(
-                  onPressed: () => pickImage(),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    minimumSize: MaterialStateProperty.all(Size(320, 160)), // Adjust the width and height as needed
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF6F6F6)), // Set the background color to light green
-                  ),
-                  child: Text(
-                    "Click to upload".toUpperCase(),
-                    style: TextStyle(fontSize: 16, color: Colors.grey,),
-                    // You can adjust the font size here
-                  ),
-                ),
+                  child: ImageUploadWidget()
               ),
               SizedBox(height: 40),//Text: Check your scalp condition
               Center(
@@ -130,29 +178,10 @@ class Scalp3Screen extends StatelessWidget {
                   ),
                   child: Text(
                     "Next".toUpperCase(),
-                    style: TextStyle(fontSize: 16), // You can adjust the font size here
+                    style: TextStyle(fontSize: 16,color :Colors.white), // You can adjust the font size here
                   ),
                 ),
               ),
-              // Center(
-              //   child: DottedBorder(
-              //
-              //     color: Colors.black,
-              //     dashPattern: [6, 6, 6, 6],
-              //     strokeWidth: 1,
-              //     radius: Radius.circular(12),
-              //     padding: EdgeInsets.all(6),
-              //     child: Text(
-              //       "Click to upload".toUpperCase(),
-              //       style: TextStyle(fontSize: 16, color: Colors.grey,),
-              //       // You can adjust the font size here
-              //     ),
-              //   ),
-              //
-              // )
-
-
-
             ])
 
         ),

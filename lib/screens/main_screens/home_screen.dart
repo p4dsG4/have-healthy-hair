@@ -4,8 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:p4ds/screens/main_screens/scalp_screen.dart';
 import 'package:p4ds/screens/custom_appbar.dart';
-import 'package:p4ds/screens/Products/clinics.dart';
-import 'package:p4ds/screens/Products/shampoo.dart';
+import 'package:p4ds/screens/Products/clinic_list.dart';
+import 'package:p4ds/screens/Products/product_list.dart';
 import 'package:p4ds/providers/main_provider.dart';
 import 'package:p4ds/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -15,14 +15,14 @@ import 'package:p4ds/screens/main_screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  Future<String?> getDbdata() async {
-    FirebaseFirestore db = FirebaseFirestore.instance;
-    await db.collection("clinic").get().then((event) {
-      for (var doc in event.docs) {
-        print("${doc.id} => ${doc.data()}");
-      }
-    });
-  }
+  // Future<String?> getDbdata() async {
+  //   FirebaseFirestore db = FirebaseFirestore.instance;
+  //   await db.collection("clinic").get().then((event) {
+  //     for (var doc in event.docs) {
+  //       print("${doc.id} => ${doc.data()}");
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +30,18 @@ class HomeScreen extends StatelessWidget {
     final up = Provider.of<UserProvider>(context);
     final mp = Provider.of<MainProvider>(context);
 
-    // FireBaseStorage.getData()
-    //     .then((data) => {
-    //       for (var i in data.prefixes)<void>{
-    //         print(i)
-    //       }
-    // });
 
-    //firebase storage에 넣기!
+    // firebase storage에 넣기!
     FirebaseStorage _storage = FirebaseStorage.instance;
     Reference _ref = _storage.ref("test/text");
     _ref.putString("Hello World !!");
 
+    // FireBaseStorage.getData()
+    //     .then((data) => {
+    //   for (var i in data.prefixes)<void>{
+    //     print(i)
+    //   }
+    // });
 
 
 
@@ -259,7 +259,7 @@ class HomeScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ShampooScreen()), // Replace with the desired screen
+                              MaterialPageRoute(builder: (context) => ProductScreen()), // Replace with the desired screen
                             );
                           },
                           child: Container(

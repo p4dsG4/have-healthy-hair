@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p4ds/screens/solution/solution_result.dart';
 import 'package:p4ds/screens/solution/toggle_button.dart';
 
 class SurveyWidget extends StatefulWidget {
@@ -8,6 +9,7 @@ class SurveyWidget extends StatefulWidget {
     required this.minCheck,
     required this.maxCheck,
     required this.answers,
+    this.submitStep,
     required this.next});
 
   final String title;
@@ -15,14 +17,80 @@ class SurveyWidget extends StatefulWidget {
   final int minCheck;
   final int maxCheck;
   final List<String> answers;
+  final int? submitStep;
   final StatelessWidget next;
   
   @override
   State<StatefulWidget> createState() => _SurveyState();
 }
 
+class ToggleButton extends StatelessWidget {
+  final String text;
+  final bool selected;
+  final VoidCallback onPressed;
+  final bool disabled;
+
+  const ToggleButton({
+    Key? key,
+    required this.text,
+    required this.selected,
+    required this.onPressed,
+    this.disabled = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: disabled ? null : onPressed,
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            side: const BorderSide(color: Colors.transparent),
+          ),
+        ),
+        minimumSize: MaterialStateProperty.all(const Size(280, 50)),
+        backgroundColor: MaterialStateProperty.all<Color>(
+          selected ? Colors.green : (disabled ? Colors.grey : Colors.white),
+        ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 18,
+          color: selected ? Colors.white : Colors.black87,
+        ),
+      ),
+    );
+  }
+}
+
+class SurveyData {
+  static String step1BinaryRepresentation = "";
+}
+
 class _SurveyState extends State<SurveyWidget> {
   int selectedCount = 0;
+  List<bool> buttonStates = List.filled(8, false); // Assuming 8 buttons
+
+  void toggleButton(int index, bool selected) {
+    setState(() {
+      buttonStates[index] = selected;
+      selectedCount += selected ? 1 : -1;
+    });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize buttonStates based on the number of answers
+    buttonStates = List.filled(widget.answers.length, false);
+  }
+
+  String getBinaryRepresentation() {
+    return buttonStates.map((state) => state ? '1' : '0').join();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,38 +114,62 @@ class _SurveyState extends State<SurveyWidget> {
               textAlign: TextAlign.center,
             ),
           ),
+          const SizedBox(height: 50),
           Expanded(child: GridView.count(
-              padding: const EdgeInsets.all(80),
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 4,
+              padding: const EdgeInsets.only(left:40, right:40),
+              crossAxisSpacing: 40,
+              mainAxisSpacing: 50,
+              childAspectRatio: 4 / 2, // Width to height ratio (adjust as needed)
               crossAxisCount: widget.columns,
-              children: widget.answers.map((answer) => ToggleButton(answer,
-                onPressed: (selected) => setState(() => selected ? selectedCount++ : selectedCount--),
-                disabled: isOverMax,
-              )).toList()
-          )),
+              children: widget.answers.asMap().entries.map((entry) {
+                int index = entry.key;
+                String answer = entry.value;
+                return ToggleButton(
+                  text: answer,
+                  selected: buttonStates[index],
+                  onPressed: () => toggleButton(index, !buttonStates[index]),
+                  disabled: isOverMax && !buttonStates[index],
+                );
+              }).toList(),          )),
           const SizedBox(height: 20),
           Center(
             child: ElevatedButton(
               onPressed:isNextEnabled?  () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => widget.next));
+                String binaryRepresentation = getBinaryRepresentation();
+
+                print("Submit Step : $binaryRepresentation");
+                if(widget.submitStep == 1){
+                  SurveyData.step1BinaryRepresentation = getBinaryRepresentation();
+                  print("Submit Step 1: ${SurveyData.step1BinaryRepresentation}");
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => widget.next));
+                }
+                else if(widget.submitStep == 5){
+                  String binaryRepresentationStep5 = getBinaryRepresentation();
+                  String combinedRepresentation = SurveyData.step1BinaryRepresentation + binaryRepresentationStep5;
+                  print("Submit Step 5: $combinedRepresentation");
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SolutionResultScreen(combinedRepresentation)));
+                }
+                else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => widget.next));
+                }
               } : null,
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(color: Colors.green)
+                    side: const BorderSide(color: Colors.transparent)
                   ),
                 ),
                 minimumSize: MaterialStateProperty.all(const Size(280, 50)), // Adjust the width and height as needed
-                backgroundColor: 
-                  isNextEnabled ? 
+                backgroundColor:
+                  isNextEnabled ?
                     MaterialStateProperty.all<Color>(Colors.green)
                     : MaterialStateProperty.all<Color>(Colors.grey), // Set the background color to light green
               ),
               child: Text(
                 "Next".toUpperCase(),
-                style: const TextStyle(fontSize: 16), // You can adjust the font size here
+                style: TextStyle(fontSize: 16,color :Colors.white), // You can adjust the font size here
               ),
             ),
           ),

@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         Routes.scalp2: (context) => const Scalp2Screen(),
         Routes.scalp3: (context) => const Scalp3Screen(),
         Routes.scalp4: (context) => const Scalp4Screen(),
-        Routes.scalpResult: (context) => const ScalpResultScreen(),
+        Routes.scalpResult: (context) =>  ScalpResultScreen(),
       },
       initialRoute: Routes.mainScreen,
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:p4ds/screens/Profile/edit_profile.dart';
 import 'package:p4ds/screens/Profile/scalp_records.dart';
-import 'package:p4ds/screens/Profile/Wishlist.dart';
+import 'package:p4ds/screens/Profile/wishlist.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -80,7 +81,10 @@ class Profile extends StatelessWidget {
                   top: 180,
                   child: ElevatedButton(
                     onPressed: () {
-                      // You can add your logic when the button is tapped
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  EditProfileScreen()),
+                      );// You can add your logic when the button is tapped
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.transparent, // Make the button transparent
@@ -120,7 +124,7 @@ class Profile extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ScalpRecordsScreen()),
+                        MaterialPageRoute(builder: (context) => const ScalpRecordScreen()),
                       );
                       // You can add your logic when the button is tapped
                     },

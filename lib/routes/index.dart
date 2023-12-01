@@ -7,9 +7,10 @@ class Routes {
   static const String hairlineScreen = '/main/hairline';
 
   // profile screens
-  static const String editProfileScreen = '/profile/edit';
+  static const String editProfileScreen = '/profile_screens/edit_profile';
   static const String profile = '/profile_screens/profile';
   static const String scalpRecords = '/profile_screens/scalp_records';
+  static const String scalpCompare = '/profile_screens/scalp_compare';
   static const String wishlist = '/profile_screens/wishlist';
 
 
@@ -34,5 +35,10 @@ class Routes {
   static const String clinic = '/products_screens/clinics';
   static const String shampoo = '/products_screens/shampoos';
   static const String shampooDetail = '/products_screens/shampoo_detail';
+
+
+  //hairline screens
+  static const String hairlineUpload = '/hairline_screens/hairline_upload';
+  static const String hairlineResult = '/hairline_screens/hairline_result';
 }
 

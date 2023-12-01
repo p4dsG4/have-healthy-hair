@@ -5,9 +5,8 @@ import 'package:p4ds/models/clinic.dart';
 import 'package:p4ds/repo/clinic_repository.dart';
 import 'package:p4ds/screens/Products/clinic_details.dart';
 
-
-
 class ClinicScreen extends StatelessWidget {
+  final String currentUserDocId = "eAzkQ6yq21k05Bzp7xvU";  // Replace with actual user document ID
   const ClinicScreen({super.key});
 
   pickImage() async {
@@ -15,97 +14,149 @@ class ClinicScreen extends StatelessWidget {
     await _picker.pickImage(source: ImageSource.gallery);
   }
 
+  Future<String> fetchUserZipCode() async {
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(currentUserDocId).get();
+    print(userDoc['ZIPCD']);
+    return userDoc['ZIPCD'] ?? "";  // Assuming ZIPCD field exists in user document
+  }
+
+  void showAllClinics(BuildContext context) {
+    clinicListKey.currentState?.showAllClinics();
+  }
+
+  void showNearbyClinics(BuildContext context) async {
+    String userZipCode = await fetchUserZipCode();
+    clinicListKey.currentState?.showNearbyClinics(userZipCode);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70, // default is 56
+        toolbarHeight: 70,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
         leading: Padding(
-          padding: EdgeInsets.only(top: 16.0), // Adjust the padding as needed
+          padding: EdgeInsets.only(top: 16.0),
           child: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black54),
-            onPressed: () {
-              // Navigate back when the back arrow is tapped
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.pop(context),
           ),
         ),
       ),
       body: SafeArea(
-          child: Container(
-              color: Colors.white,
-              child: ListView(children: [
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 0),
-                      Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Text(
-                            '클리닉',
-                            style: TextStyle(
-                              color: Color(0xFF23262F),
-                              fontSize: 20,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.bold,
-                              height: 0.17,
-                            ),
-                          )
-                      )
-                    ]
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            children: [
+              SizedBox(height: 5),
+              Align(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.location_on, color: Colors.green, size: 30),
+                    SizedBox(width: 10),
+                    Text('Hospital/Clinic', style: TextStyle(color: Color(0xFF23262F), fontSize: 25, fontFamily: 'Inter', fontWeight: FontWeight.bold)),
+                  ],
                 ),
-                SizedBox(height: 30),//Text: Check your scalp condition
-                ClinicList(),
-                //탈모병원&샴푸두피케어
-
-              ])
+              ),
+              SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 30.0),
+                child: Row(
+                  children: [
+                    _buildButton("All", () => showAllClinics(context)),
+                    SizedBox(width: 15),
+                    _buildButton("Nearby", () => showNearbyClinics(context)),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              ClinicList(key: clinicListKey),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildButton(String text, VoidCallback onPressed) {
+    return Container(
+      width: 90,
+      height: 35,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Colors.grey)),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        ),
+        child: Text(text, style: TextStyle(fontSize: 13, color: Colors.black87)),
+      ),
     );
   }
 }
 
+
+GlobalKey<_ClinicListState> clinicListKey = GlobalKey();
+
 class ClinicList extends StatefulWidget {
+  ClinicList({Key? key}) : super(key: key);
+
   @override
   _ClinicListState createState() => _ClinicListState();
 }
 
 class _ClinicListState extends State<ClinicList> {
+  Stream<QuerySnapshot>? clinicStream;
   final ClinicRepository _clinicRepository = ClinicRepository();
+
+  @override
+  void initState() {
+    super.initState();
+    showAllClinics();
+  }
+
+  void showAllClinics() {
+    setState(() => clinicStream = _clinicRepository.getStream());
+  }
+
+  void showNearbyClinics(String zipCode) {
+    setState(() => clinicStream = _clinicRepository.getStreamWithZip(zipCode));
+  }
+
   @override
   Widget build(BuildContext context) {
     return _buildClinicList(context);
   }
 
   Widget _buildClinicList(BuildContext context) {
-    return Center(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: _clinicRepository.getStream(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return CircularProgressIndicator(
-            strokeWidth: 12.0,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-          );
-          return _buildClinicListView(context, snapshot.data!.docs);
-        },
-      )
+    return StreamBuilder<QuerySnapshot>(
+      stream: clinicStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        if (!snapshot.hasData) return CircularProgressIndicator();
+        return _buildClinicListView(context, snapshot.data!.docs);
+      },
     );
   }
 
-  Widget _buildClinicListView(BuildContext context, List<DocumentSnapshot> snapshot) {
-    return ListView(
+  Widget _buildClinicListView(BuildContext context,
+      List<DocumentSnapshot> snapshot) {
+    return ListView.builder(
       shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 20.0),
-      children: snapshot.map((data) => _buildClinicListItem(context, data)).toList(),
+      itemCount: snapshot.length,
+      itemBuilder: (context, index) =>
+          _buildClinicListItem(context, snapshot[index]),
     );
   }
 
   Widget _buildClinicListItem(BuildContext context, DocumentSnapshot data) {
     final clinic = Clinic.fromSnapshot(data);
-
     return Padding(
       key: ValueKey(clinic.name),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -116,18 +167,23 @@ class _ClinicListState extends State<ClinicList> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ClinicDetailScreen(clinic: clinic)),
+              MaterialPageRoute(
+                  builder: (context) => ClinicDetailScreen(clinic: clinic)),
             );
           },
           style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
+                borderRadius: BorderRadius.circular(10.0),
                 side: BorderSide(color: Colors.white),
               ),
             ),
-            minimumSize: MaterialStateProperty.all(Size(160, 160)), // Adjust the width and height as needed
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.white), // Set the background color
+            elevation: MaterialStateProperty.all<double>(5.0),
+            // Add elevation (shadow) to the button
+            minimumSize: MaterialStateProperty.all(Size(160, 160)),
+            // Adjust the width and height as needed
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Colors.white), // Set the background color
           ),
           child: Stack(
             alignment: Alignment.bottomRight,
@@ -135,10 +191,29 @@ class _ClinicListState extends State<ClinicList> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 12.0), // Adjust the top and left padding as needed
-                  child: Text(
-                    clinic.name ?? "Unknown",
-                    style: TextStyle(fontSize: 18, color: Colors.black87,),
+                  padding: EdgeInsets.only(top: 15.0),
+                  // Adjust the top and left padding as needed
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        clinic.name ?? "Unknown",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      // Add vertical space between the two texts
+                      Text(
+                        clinic.address ?? "Unknown",
+                        style: TextStyle(
+                          fontSize: 14, // Adjust the font size as needed
+                          color: Colors.grey, // Customize the color of the text
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

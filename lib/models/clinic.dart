@@ -19,6 +19,8 @@ class Clinic {
 
   factory Clinic.fromJson(Map<String, dynamic>? json) => _ClinicFromJson(json);
 
+  Map<String, dynamic> toJson() => _ClinicToJson(this);
+
   @override
   String toString() => "Clinic<$name, $phone, $address>";
 }
@@ -33,3 +35,9 @@ Clinic _ClinicFromJson(Map<String, dynamic>? json) {
       json?['URL'] as String
   );
 }
+
+Map<String, dynamic> _ClinicToJson(Clinic instance) => <String, dynamic> {
+  'name': instance.name,
+  'zipcd': instance.zipcd,
+  'phone': instance.phone,
+};

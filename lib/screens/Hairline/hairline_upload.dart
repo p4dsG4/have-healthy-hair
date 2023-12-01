@@ -3,7 +3,9 @@ import 'package:p4ds/screens/scalp/scalp_2.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:p4ds/screens/scalp/scalp_result.dart';
 import '../../repo/image_storage.dart';
+import 'Hairline_result.dart';
 
 class ImageUploadWidget extends StatefulWidget {
   @override
@@ -39,10 +41,10 @@ class _ImageUploadState extends State<ImageUploadWidget> {
     });
 
     final formattedDate = DateFormat('yyyyMMdd').format(DateTime.now());
-    final imageName = 'Top_$formattedDate';
+    final imageName = 'Hairline_$formattedDate';
 
     ImageStorage.uploadImageToFirebase(
-        path: "user1",
+        path: "user1/Hairline",
         imageName: imageName,
         uploadStartCallback: imageUploadStarted
     ).then((url) {
@@ -58,40 +60,48 @@ class _ImageUploadState extends State<ImageUploadWidget> {
 
 
 @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => pickImage(),
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            side: BorderSide(color: Colors.white),
+Widget build(BuildContext context) {
+  return ElevatedButton(
+    onPressed: () => pickImage(),
+    style: ButtonStyle(
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+          side: BorderSide(color: Colors.white),
+        ),
+      ),
+      minimumSize: MaterialStateProperty.all(Size(320, 450)), // Adjust the width and height as needed
+      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF6F6F6)), // Set the background color to light grey
+    ),
+    child: uploading
+        ? CircularProgressIndicator() // Show CircularProgressIndicator while uploading
+        : Stack(
+      alignment: Alignment.center,
+      children: [
+        if (imageUpload) Image.network(uploadImageUrl, width: 340, height: 400), // Uploaded image
+        ColorFiltered(
+          colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcATop),
+          child: Image.asset('assets/images/home/guide.png', width: 400, height: 450),
+        ), // White color filtered tool.png
+        if (!imageUpload) Padding(
+          padding: EdgeInsets.all(90.0), // You can adjust the padding value as needed
+          child: Text(
+            "Please click here to upload your photo with your face fitting inside the line.\n\n\n",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
         ),
-        minimumSize: MaterialStateProperty.all(Size(320, 160)), // Adjust the width and height as needed
-        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF6F6F6)), // Set the background color to light green
-      ),
-      child: uploading
-          ? CircularProgressIndicator() // Show CircularProgressIndicator while uploading
-          : imageUpload
-          ? Image.network(
-        uploadImageUrl,
-        width: 100,
-        height: 100,
-      )
-          : Text(
-        "Click to upload".toUpperCase(),
-        style: TextStyle(fontSize: 16, color: Colors.grey,),
-        // You can adjust the font size here
-      ),
-    );
-  }
+      ],
+    ),
+  );
+}
+
 }
 
 
 
-class Scalp1Screen extends StatelessWidget {
-  const Scalp1Screen({super.key});
+class HairlineUploadScreen extends StatelessWidget {
+  const HairlineUploadScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -119,58 +129,23 @@ class Scalp1Screen extends StatelessWidget {
             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      '',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                      ),
-                    ),
-                  ),
                   // SizedBox(height: 10),
                   Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        'Please upload a photo of the indicated area shown below.',
+                        'Please upload a photo of your face. \nMake sure that your hairline is clearly visible.',
                         style: TextStyle(
                           color: Color(0xFF23262F),
                           fontSize: 13,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w500,
-                          height: 0.17,
+                          height: 1.5,
                         ),
                       )
                   )
                 ]
             ),
-            SizedBox(height: 40),//Text: Check your scalp condition
-            Positioned(
-              left: 17,
-              top: 143,
-              child: Container(
-                width: 343,
-                height: 250,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        width: double.infinity,
-                        height: 180,
-                        child: Image.asset('assets/images/scalp/ex1.png')
-
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            SizedBox(height: 20),//Text: Check your scalp condition
             Center(
               child: ImageUploadWidget()
             ),
@@ -180,7 +155,7 @@ class Scalp1Screen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Scalp2Screen() )
+                      MaterialPageRoute(builder: (context) => const HairlineResultScreen())
                   );
                 },
                 style: ButtonStyle(
@@ -195,7 +170,7 @@ class Scalp1Screen extends StatelessWidget {
                 ),
                 child: Text(
                   "Next".toUpperCase(),
-                  style: TextStyle(fontSize: 16), // You can adjust the font size here
+                  style: TextStyle(fontSize: 16,color :Colors.white), // You can adjust the font size here
                 ),
               ),
             ),

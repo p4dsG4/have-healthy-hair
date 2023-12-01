@@ -165,7 +165,7 @@ class ScalpScreen extends StatelessWidget {
                     ),
                     child: Text(
                       "Upload scalp picture".toUpperCase(),
-                      style: TextStyle(fontSize: 16), // You can adjust the font size here
+                      style: TextStyle(fontSize: 16,color :Colors.white), // You can adjust the font size here
                     ),
                   ),
                 )

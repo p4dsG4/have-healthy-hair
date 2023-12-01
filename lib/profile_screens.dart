@@ -4,7 +4,6 @@ import 'package:p4ds/providers/user_provider.dart';
 import 'package:p4ds/routes/index.dart';
 import 'package:p4ds/screens/Profile/scalp_records.dart';
 import 'package:p4ds/screens/edit_profile_screen.dart';
-import 'package:p4ds/screens/solution/survey_1.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       routes: {
         // scalp screens
-        Routes.scalpRecords: (context) => const ScalpRecordsScreen(),
+        Routes.scalpRecords: (context) => const ScalpRecordScreen(),
         Routes.profile: (context) => const Profile(),
 
 

@@ -7,13 +7,12 @@ import 'package:p4ds/repo/scalp_repository.dart'; // Import ScalpRepository
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-class ScalpResultScreen extends StatefulWidget {
+class ScalpCompareScreen extends StatefulWidget {
   @override
-  _ScalpResultScreenState createState() => _ScalpResultScreenState();
-
+  _ScalpCompareScreenState createState() => _ScalpCompareScreenState();
 }
 
-class _ScalpResultScreenState extends State<ScalpResultScreen> {
+class _ScalpCompareScreenState extends State<ScalpCompareScreen> {
   final ScalpRepository scalpRepository = ScalpRepository();
   Map<String, dynamic>? currentData;
   String selectedScalpArea = ''; // New variable to track the selected scalp area
@@ -173,9 +172,9 @@ class _ScalpResultScreenState extends State<ScalpResultScreen> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: EdgeInsets.only(left: 30),
                   child: Text(
-                    'Your scalp condition is',
+                    '얼마나 나아졌게요?',
                     style: TextStyle(
                       color: Color(0xFF23262F),
                       fontSize: 20,
@@ -215,22 +214,37 @@ class _ScalpResultScreenState extends State<ScalpResultScreen> {
                 child: Row(
                   children: [
                     Text(
+                      '-3',
+                      style: TextStyle(fontWeight: FontWeight.bold), // Add this line to make the text bold
+                    ),
+                    SizedBox(width: 23),
+                    Text(
+                      '-2',
+                      style: TextStyle(fontWeight: FontWeight.bold), // Add this line to make the text bold
+                    ),
+                    SizedBox(width: 23),
+                    Text(
+                      '-1',
+                      style: TextStyle(fontWeight: FontWeight.bold), // Add this line to make the text bold
+                    ),
+                    SizedBox(width: 23),
+                    Text(
                       '0',
                       style: TextStyle(fontWeight: FontWeight.bold), // Add this line to make the text bold
                     ),
-                    SizedBox(width: 65),
+                    SizedBox(width: 23),
                     Text(
-                      '1',
+                      '+1',
                       style: TextStyle(fontWeight: FontWeight.bold), // Add this line to make the text bold
                     ),
-                    SizedBox(width: 65),
+                    SizedBox(width: 23),
                     Text(
-                      '2',
+                      '+2',
                       style: TextStyle(fontWeight: FontWeight.bold), // Add this line to make the text bold
                     ),
-                    SizedBox(width: 65),
+                    SizedBox(width: 23),
                     Text(
-                      '3',
+                      '+3',
                       style: TextStyle(fontWeight: FontWeight.bold), // Add this line to make the text bold
                     ),
                   ],
@@ -241,30 +255,6 @@ class _ScalpResultScreenState extends State<ScalpResultScreen> {
                 child: currentData != null
                     ? _buildProgressIndicators(currentData)
                     : Text('원하는 부위를 누르세요'),
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ScalpRecordScreen() )
-                    );
-                  },
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.green),
-                      ),
-                    ),
-                    minimumSize: MaterialStateProperty.all(Size(200, 50)), // Adjust the width and height as needed
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.green), // Set the background color to light green
-                  ),
-                  child: Text(
-                    "My records".toUpperCase(),
-                    style: TextStyle(fontSize: 16,color :Colors.white), // You can adjust the font size here
-                  ),
-                ),
               ),
             ],
           );

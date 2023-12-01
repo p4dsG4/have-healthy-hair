@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserRepository {
-  final CollectionReference collection = FirebaseFirestore.instance.collection('users');
+class ScalpRepository {
+  final CollectionReference collection = FirebaseFirestore.instance.collection('scalp_ml');
 
   Stream<QuerySnapshot> getStream() {
     return collection.snapshots();

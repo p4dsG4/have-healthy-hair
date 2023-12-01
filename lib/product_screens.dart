@@ -7,8 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import 'screens/Products/clinics.dart';
-import 'screens/Products/shampoo.dart';
+import 'screens/Products/clinic_list.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized(); // Ensure that Flutter is initialized.
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
       routes: {
         // scalp screens
         Routes.clinic: (context) => const ClinicScreen(),
-        Routes.shampoo: (context) => const ShampooScreen(),
       },
       initialRoute: Routes.mainScreen,
     );

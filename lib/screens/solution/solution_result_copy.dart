@@ -3,8 +3,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:p4ds/screens/main_screens/solutions_screen.dart';
 
 
-class SolutionResultScreen extends StatelessWidget {
-  const SolutionResultScreen(this.productKey, {super.key});
+class SolutionResultScreen_cp extends StatelessWidget {
+  const SolutionResultScreen_cp(this.productKey, {super.key});
 
   final String productKey;
 

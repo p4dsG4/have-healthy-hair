@@ -1,16 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:p4ds/screens/scalp/scalp_2.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../repo/image_storage.dart';
+
+class ImageUploadWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ImageUploadState();
+}
+
+class _ImageUploadState extends State<ImageUploadWidget> {
+  bool imageUpload = false;
+  String uploadImageUrl = "";
+  bool uploading = false;
+
+  void imageUploadStarted() {
+    setState(() {
+      uploading = true;
+    });
+  }
+
+  void uploadTimestamp(String imageName) {
+    FirebaseFirestore.instance.collection('upload_events').doc(imageName).set({
+      'timestamp': FieldValue.serverTimestamp() // Use server timestamp
+    }, SetOptions(merge: true)) // Merge with existing data if the document already exists
+        .then((_) {
+      print('Timestamp added for image: $imageName');
+    }).catchError((error) {
+      print('Error adding timestamp: $error');
+    });
+  }
+
+
+  void pickImage() async {
+    setState(() {
+      uploading = true;
+    });
+
+    final formattedDate = DateFormat('yyyyMMdd').format(DateTime.now());
+    final imageName = 'Top_$formattedDate';
+
+    ImageStorage.uploadImageToFirebase(
+        path: "user1/Scalp",
+        imageName: imageName,
+        uploadStartCallback: imageUploadStarted
+    ).then((url) {
+      setState(() {
+        imageUpload = true;
+        uploadImageUrl = url;
+        uploading = false;
+      });
+      uploadTimestamp(imageName); // Call function to upload timestamp
+      print(url);
+    });
+  }
+
+
+@override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => pickImage(),
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            side: BorderSide(color: Colors.white),
+          ),
+        ),
+        minimumSize: MaterialStateProperty.all(Size(320, 160)), // Adjust the width and height as needed
+        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF6F6F6)), // Set the background color to light green
+      ),
+      child: uploading
+          ? CircularProgressIndicator() // Show CircularProgressIndicator while uploading
+          : imageUpload
+          ? Image.network(
+        uploadImageUrl,
+        width: 100,
+        height: 100,
+      )
+          : Text(
+        "Click to upload".toUpperCase(),
+        style: TextStyle(fontSize: 16, color: Colors.grey,),
+        // You can adjust the font size here
+      ),
+    );
+  }
+}
 
 
 
 class Scalp1Screen extends StatelessWidget {
   const Scalp1Screen({super.key});
-
-  pickImage() async {
-    ImagePicker _picker = ImagePicker();
-    await _picker.pickImage(source: ImageSource.gallery);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,45 +116,6 @@ class Scalp1Screen extends StatelessWidget {
       child: Container(
         color: Colors.white,
         child: ListView(children: [
-            // Row(
-            //     children: [
-            //       Positioned(
-            //         left: 16,
-            //         top: 39,
-            //         child: Container(
-            //           width: 60.62,
-            //           height: 77,
-            //           child: Stack(
-            //             children: [
-            //               Positioned(
-            //                 left: 46.39,
-            //                 top: 0,
-            //                 child: Transform(
-            //                   transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
-            //                   child: Container(
-            //                       width: 42.39,
-            //                       height: 33.07,
-            //                       child: Image.asset('assets/images/home/scalppic.png')
-            //
-            //                   ),
-            //                 ),
-            //               ),
-            //               Positioned(
-            //                 left: 0,
-            //                 top: 13.41,
-            //                 child: Container(
-            //                     width: 60.62,
-            //                     height: 63.59,
-            //                     child: Image.asset('assets/images/logo.png')
-            //
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ), //logo
-            //     ]
-            // ),
             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -130,24 +172,7 @@ class Scalp1Screen extends StatelessWidget {
               ),
             ),
             Center(
-              child: ElevatedButton(
-                onPressed: () => pickImage(),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                  minimumSize: MaterialStateProperty.all(Size(320, 160)), // Adjust the width and height as needed
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF6F6F6)), // Set the background color to light green
-                ),
-                child: Text(
-                  "Click to upload".toUpperCase(),
-                  style: TextStyle(fontSize: 16, color: Colors.grey,),
-                  // You can adjust the font size here
-                ),
-              ),
+              child: ImageUploadWidget()
             ),
             SizedBox(height: 40),//Text: Check your scalp condition
             Center(
@@ -170,29 +195,10 @@ class Scalp1Screen extends StatelessWidget {
                 ),
                 child: Text(
                   "Next".toUpperCase(),
-                  style: TextStyle(fontSize: 16), // You can adjust the font size here
+                  style: TextStyle(fontSize: 16,color :Colors.white), // You can adjust the font size here
                 ),
               ),
             ),
-            // Center(
-            //   child: DottedBorder(
-            //
-            //     color: Colors.black,
-            //     dashPattern: [6, 6, 6, 6],
-            //     strokeWidth: 1,
-            //     radius: Radius.circular(12),
-            //     padding: EdgeInsets.all(6),
-            //     child: Text(
-            //       "Click to upload".toUpperCase(),
-            //       style: TextStyle(fontSize: 16, color: Colors.grey,),
-            //       // You can adjust the font size here
-            //     ),
-            //   ),
-            //
-            // )
-
-
-
           ])
 
       ),

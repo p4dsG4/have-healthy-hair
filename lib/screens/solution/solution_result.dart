@@ -6,121 +6,88 @@ import 'package:p4ds/repo/product_repository.dart';
 import 'package:p4ds/screens/Products/product_details.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../models/clinic.dart';
+import '../../repo/clinic_repository.dart';
+import '../Products/clinic_details.dart';
 
 
-class ProductScreen extends StatelessWidget {
-  const ProductScreen({super.key});
-
-
-
-  pickImage() async {
-    ImagePicker _picker = ImagePicker();
-    await _picker.pickImage(source: ImageSource.gallery);
-  }
+class SolutionResultScreen extends StatelessWidget {
+  final String productKey;
+  const SolutionResultScreen(this.productKey, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70, // default is 56
+        toolbarHeight: 70,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
         leading: Padding(
-          padding: EdgeInsets.only(top: 16.0), // Adjust the padding as needed
+          padding: EdgeInsets.only(top: 16.0),
           child: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black54),
-            onPressed: () {
-              // Navigate back when the back arrow is tapped
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.of(context).popUntil((route)=>route.isFirst)
+            ,
           ),
         ),
       ),
       body: SafeArea(
-          child: Container(
-              color: Colors.white,
-              child: ListView(children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 0),
-                    Padding(
-                      padding: EdgeInsets.all(0),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center, // Center both items horizontally
-                          crossAxisAlignment: CrossAxisAlignment.center, // Center both items vertically
-                          children: [
-                            Icon(
-                              Icons.shopping_basket_rounded, // Replace with the location icon you want to use
-                              color: Colors.green, // Customize the color of the location icon
-                              size: 30, // Adjust the size of the icon as needed
-                            ),
-                            SizedBox(width: 10), // Add space between the icon and text
-                            Text(
-                              'Scalp Products',
-                              style: TextStyle(
-                                color: Color(0xFF23262F),
-                                fontSize: 25,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.bold,
-                                height: 0.0,
-                              ),
-                            ),
-                          ],
+        child: Container(
+            color: Colors.white,
+            child: ListView(
+                children: [
+                  // Header Section
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Scalp Products for You!',
+                        style: TextStyle(
+                          color: Color(0xFF23262F),
+                          fontSize: 25,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 15),
-                Container(
-                  height: 70,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 30.0), // Adjust the padding as needed
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 35,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Your onPressed logic here
-                            },
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(color: Colors.grey),
-                                ),
-                              ),
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white), // Set the background color
-                            ),
-                            child: Text(
-                              "All",
-                              style: TextStyle(fontSize: 15, color: Colors.black87,),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 15), // Add space of 10 units between containers
-                      ],
                     ),
                   ),
-                ), //Text: Check your scalp condition
-                ProductList(),
-                //탈모병원&샴푸두피케어
-
-              ])
-          ),
+                  SizedBox(height: 20),
+                  // Product List
+                  ProductList(productKey: productKey),
+                  SizedBox(height: 50),
+                  // Clinic List
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Clinics for You!',
+                        style: TextStyle(
+                          color: Color(0xFF23262F),
+                          fontSize: 25,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  ClinicList(),
+            ])
         ),
+      ),
     );
   }
 }
 
+
+
 class ProductList extends StatefulWidget {
+  final String productKey;
+
+  ProductList({Key? key, required this.productKey}) : super(key: key);
+
   @override
   _ProductListState createState() => _ProductListState();
 }
@@ -139,6 +106,7 @@ class _ProductListState extends State<ProductList> {
       return null;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return _buildProductList(context);
@@ -146,16 +114,19 @@ class _ProductListState extends State<ProductList> {
 
   Widget _buildProductList(BuildContext context) {
     return Center(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: _ProductRepository.getStream(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return CircularProgressIndicator(
-            strokeWidth: 12.0,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-          );
-          return _buildProductListView(context, snapshot.data!.docs);
-        },
-      )
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('products')
+              .where('TF', isEqualTo: widget.productKey) // Filter products based on TF field
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return CircularProgressIndicator(
+              strokeWidth: 12.0,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+            );
+            return _buildProductListView(context, snapshot.data!.docs);
+          },
+        )
     );
   }
 
@@ -267,6 +238,146 @@ class _ProductListState extends State<ProductList> {
           ),
         ),
 
+      ),
+    );
+  }
+}
+
+
+
+
+GlobalKey<_ClinicListState> clinicListKey = GlobalKey();
+class ClinicList extends StatefulWidget {
+  ClinicList({Key? key}) : super(key: key);
+
+  @override
+  _ClinicListState createState() => _ClinicListState();
+}
+
+class _ClinicListState extends State<ClinicList> {
+  Stream<QuerySnapshot>? clinicStream;
+  final ClinicRepository _clinicRepository = ClinicRepository();
+  final String currentUserDocId = "eAzkQ6yq21k05Bzp7xvU"; // User document ID
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    initClinicList();
+  }
+
+  void initClinicList() async {
+    String userZipCode = await fetchUserZipCode();
+    showNearbyClinics(userZipCode);
+  }
+
+  Future<String> fetchUserZipCode() async {
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(currentUserDocId).get();
+    return userDoc['ZIPCD'] ?? "";
+  }
+
+  void showNearbyClinics(String zipCode) {
+    setState(() {
+      clinicStream = _clinicRepository.getStreamWithZip(zipCode);
+      isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return _buildClinicList(context);
+  }
+
+  Widget _buildClinicList(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: clinicStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        if (!snapshot.hasData) return CircularProgressIndicator();
+        return _buildClinicListView(context, snapshot.data!.docs);
+      },
+    );
+  }
+
+
+  Widget _buildClinicListView(BuildContext context,
+      List<DocumentSnapshot> snapshot) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: snapshot.length,
+      itemBuilder: (context, index) =>
+          _buildClinicListItem(context, snapshot[index]),
+    );
+  }
+
+  Widget _buildClinicListItem(BuildContext context, DocumentSnapshot data) {
+    final clinic = Clinic.fromSnapshot(data);
+    return Padding(
+      key: ValueKey(clinic.name),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Container(
+        width: 350,
+        height: 100,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ClinicDetailScreen(clinic: clinic)),
+            );
+          },
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                side: BorderSide(color: Colors.white),
+              ),
+            ),
+            elevation: MaterialStateProperty.all<double>(5.0),
+            // Add elevation (shadow) to the button
+            minimumSize: MaterialStateProperty.all(Size(160, 160)),
+            // Adjust the width and height as needed
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Colors.white), // Set the background color
+          ),
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 15.0),
+                  // Adjust the top and left padding as needed
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        clinic.name ?? "Unknown",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      // Add vertical space between the two texts
+                      Text(
+                        clinic.address ?? "Unknown",
+                        style: TextStyle(
+                          fontSize: 14, // Adjust the font size as needed
+                          color: Colors.grey, // Customize the color of the text
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

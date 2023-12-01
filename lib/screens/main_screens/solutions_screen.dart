@@ -8,45 +8,6 @@ class SolutionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: ListView(children: [
-          // Row(
-          //     children: [
-          //       Positioned(
-          //         left: 16,
-          //         top: 39,
-          //         child: Container(
-          //           width: 60.62,
-          //           height: 77,
-          //           child: Stack(
-          //             children: [
-          //               Positioned(
-          //                 left: 46.39,
-          //                 top: 0,
-          //                 child: Transform(
-          //                   transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
-          //                   child: Container(
-          //                       width: 42.39,
-          //                       height: 33.07,
-          //                       child: Image.asset('assets/images/home/scalppic.png')
-          //
-          //                   ),
-          //                 ),
-          //               ),
-          //               Positioned(
-          //                 left: 0,
-          //                 top: 13.41,
-          //                 child: Container(
-          //                     width: 60.62,
-          //                     height: 63.59,
-          //                     child: Image.asset('assets/images/logo.png')
-          //
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //       ), //logo
-          //     ]
-          // ),
           Container(
           width: 300,
           height: 400,
@@ -113,7 +74,7 @@ class SolutionsScreen extends StatelessWidget {
               ),
               child: Text(
                 "맞춤 솔루션 시작하기".toUpperCase(),
-                style: TextStyle(fontSize: 16), // You can adjust the font size here
+                style: TextStyle(fontSize: 16,color :Colors.white), // You can adjust the font size here
               ),
             ),
           )

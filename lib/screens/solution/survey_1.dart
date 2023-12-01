@@ -26,9 +26,10 @@ class Survey1Screen extends StatelessWidget {
       body: SafeArea(
       child: Container(
         color: Colors.white,
-        child: SurveyWidget(title: '나의 두피 상태를 선택해주세요.\n(최대 세개까지 선택)',
+        child: SurveyWidget(title: 'Select your scalp contions.\n(Select up to three)',
             minCheck: 1, maxCheck: 3, columns: 2,
-            answers: ["양호", "건성", "지성", "민감성", "지루성", "염증성", "비듬성", "탈모성"],
+            answers: ["Good", "Dry", "Oily", "Sensitive", "Seborrheic", "Infammatory", "Dandruff", "Hairloss"],
+            submitStep: 1,
             next: Survey2Screen()
         ),
       ),

@@ -8,10 +8,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 
 
-class ProductScreen extends StatelessWidget {
-  const ProductScreen({super.key});
-
-
+class WishlistScreen extends StatelessWidget {
+  const WishlistScreen({super.key});
 
   pickImage() async {
     ImagePicker _picker = ImagePicker();
@@ -60,7 +58,7 @@ class ProductScreen extends StatelessWidget {
                             ),
                             SizedBox(width: 10), // Add space between the icon and text
                             Text(
-                              'Scalp Products',
+                              'Wishlist',
                               style: TextStyle(
                                 color: Color(0xFF23262F),
                                 fontSize: 25,
@@ -126,7 +124,8 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
-  final ProductRepository _ProductRepository = ProductRepository();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   Future<String?> getImageUrl(String imagePath) async {
     try {
       final ref = FirebaseStorage.instance.ref().child(imagePath);
@@ -139,37 +138,68 @@ class _ProductListState extends State<ProductList> {
       return null;
     }
   }
+
+  Future<Products?> fetchProductDetails(String productId) async {
+    try {
+      // Query the products collection where 'TF' field matches the productId
+      QuerySnapshot querySnapshot = await _firestore.collection('products')
+          .where('TF', isEqualTo: productId)
+          .limit(1) // Assuming there's only one matching product
+          .get();
+
+      // If a matching product is found, convert the first document to a Products object
+      if (querySnapshot.docs.isNotEmpty) {
+        return Products.fromSnapshot(querySnapshot.docs.first);
+      }
+    } catch (e) {
+      print('Error fetching product details: $e');
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _buildProductList(context);
+    return _buildWishlist(context);
   }
 
-  Widget _buildProductList(BuildContext context) {
+  Widget _buildWishlist(BuildContext context) {
     return Center(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: _ProductRepository.getStream(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return CircularProgressIndicator(
-            strokeWidth: 12.0,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-          );
-          return _buildProductListView(context, snapshot.data!.docs);
-        },
-      )
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _firestore.collection('wishlist').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return CircularProgressIndicator();
+            return _buildWishlistView(context, snapshot.data!.docs);
+          },
+        )
     );
   }
 
-  Widget _buildProductListView(BuildContext context, List<DocumentSnapshot> snapshot) {
-    return ListView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 0.0),
-      children: snapshot.map((data) => _buildProductListItem(context, data)).toList(),
+  Widget _buildWishlistView(BuildContext context, List<DocumentSnapshot> wishlistSnapshot) {
+    return FutureBuilder<List<Products?>>(
+      // Fetch all product details at once
+      future: Future.wait(wishlistSnapshot.map((data) {
+        String productId = data['productId'];
+        return fetchProductDetails(productId);
+      }).toList()),
+      builder: (context, allProductSnapshot) {
+        if (!allProductSnapshot.hasData) {
+          // Show loading indicator until all products are fetched
+          return CircularProgressIndicator();
+        }
+
+        // Filter out nulls if any product details couldn't be fetched
+        List<Products> products = allProductSnapshot.data!.whereType<Products>().toList();
+
+        return ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.only(top: 0.0),
+          children: products.map((product) => _buildWishlistItem(context, product)).toList(),
+        );
+      },
     );
   }
 
-  Widget _buildProductListItem(BuildContext context, DocumentSnapshot data) {
-    final product = Products.fromSnapshot(data);
-
+  Widget _buildWishlistItem(BuildContext context, Products product) {
     return Padding(
       key: ValueKey(product.reviewCnt),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -203,7 +233,7 @@ class _ProductListState extends State<ProductList> {
                   children: [
                     SizedBox(height: 10),
                     Text(
-                      product.name.toString() ?? "Unknown",
+                      product.name ?? "Unknown",
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.black87,
@@ -220,7 +250,7 @@ class _ProductListState extends State<ProductList> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          product.score.toString() ?? "Unknown",
+                          product.score?.toString() ?? "Unknown",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
@@ -228,7 +258,7 @@ class _ProductListState extends State<ProductList> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "(${product.reviewCnt.toString() ?? "Unknown"})",
+                          "(${product.reviewCnt?.toString() ?? "Unknown"})",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
@@ -242,7 +272,7 @@ class _ProductListState extends State<ProductList> {
               Expanded(
                 flex: 1, // Adjust the flex value as needed
                 child: FutureBuilder<String?>(
-                  future: getImageUrl(product.imagePath.toString()),
+                  future: getImageUrl(product.imagePath ?? ""),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();
@@ -262,11 +292,9 @@ class _ProductListState extends State<ProductList> {
                   },
                 ),
               ),
-
             ],
           ),
         ),
-
       ),
     );
   }
