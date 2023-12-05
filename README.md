@@ -1,7 +1,7 @@
 # HHH - Have Healthy Hair 
 > 2023 Fall - Project for Data Science of GSDS   
-> Make application from Front-end to Back-end, including database, modeling   
-> Total cost : 48만원
+> Make application from A to Z   
+> Total cost : ₩419,788.38
 
 ## Team Member 
 Sangwoo Heo(PO, DevOPs), Seungju Lee(ML Expert), Sunyoung Park(UI/UX Designer, Front-end),    
@@ -10,13 +10,12 @@ Chaieun Lee(Data engineer, ML Expert), Myungjoo Lee(Dev Engineer, ML Expert)
 ## Process and Stacks 
 Process | Tools | Detail
 ---- | ---- | ----
-Storage | <img src="https://img.shields.io/badge/Googlecloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"> | 200GB, x86/64 $153/month, 
-GPU | <img src="https://img.shields.io/badge/Googlecloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"> | gpu 2 x NVIDIA T4, 
-Networking | <img src="https://img.shields.io/badge/Googlecloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"> | 2,160원 
+Compute Engine | <img src="https://img.shields.io/badge/Googlecloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"> | **Stroage** :SCSI, 250GB, x86/64 </br> **GPU** :2 x NVIDIA T4 </br> **VM** :n1-standard-4, Intel Broadwell, x86/64 </br> ₩419,488.38
+Networking | <img src="https://img.shields.io/badge/Googlecloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"> | IPv4, Premium </br> ₩3,103
 UX Design | <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"> | [Design Link](https://www.figma.com/file/6QfBEA8ks5tb51J2z9t3ns/P4DS?type=design&node-id=2-666&mode=design&t=CL3pvZ3CaWQ2zOl5-0)
-Modeling | <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> | EfficientNet, GAN 
-Front-end | <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=Flutter&logoColor=white"> <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white">| local, 개인사비
-Database | <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"> | $10
+Modeling | <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> | **EfficientNet** </br> **GAN**
+Front-end | <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=Flutter&logoColor=white"> <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white">| personal expenses
+Database | <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"> | less than ₩100
 Back-end | <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white"> | API 
 
 ## Language
@@ -27,46 +26,76 @@ Back-end | <img src="https://img.shields.io/badge/Flask-000000?style=for-the-bad
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
 
 ## Project Introduction
-**Target** : Those who have concerns about hair and scalp.     
-**Function** : It diagnoses the condition of the scalp based on a photo and recommends appropriate products and clinics.     
-It records the condition of the scalp seasonally, allowing tracking by period.
-When the records accumulate, it goes further by predicting hair loss in the future.    
-**Test**    
+* **Target** : Who have concerns about hair and scalp.     
+* **Function** : It diagnoses the condition of the scalp based on a photo and recommends appropriate products and clinics.       
+It records the condition of the scalp seasonally, allowing tracking by period.    
+When the records accumulate, it goes further by predicting hair loss in the future.   
+* **Demo** : Visit [HERE]() to see our demo.
+* **Test**    
 ※ The process below is just written as record.    
 Whole process cannot be simulated exactly, because this repo is not developed for simulation.   
 
 * clone the repository:
 ```
-git clone https://github.com/p4dsG4/p4ds/hairline.git
-cd hairline
+git clone https://github.com/p4dsG4/have-healthy-hair.git
+cd HHH
 ```
 
-## Demo
-* Run ```app.py```
-
-## Database
-### Uploading json file to firestore
-* Move to the directory
-```
-cd simple-firestore-import
-```
 * Install Dependencies
 ```
+conda env create -f requirements.yaml
+conda activate {YOUR_ENV_NAME}
+```
+# Demo
+## Front-end
+* Mainuplate Flutter
+
+
+## Back-end
+The ```app.py``` must be running when using the app.
+```
+python app.py
+```
+
+# Step by Step
+## Database
+**Uploading json file to firestore**
+* Move to the directory and install dependencies
+```
+cd simple-firestore-import
 pip install -r requirements.txt
 ```
-* Make json file to upload. 
-* Run    
-  format is python {execution}.py {key}.json {upload_file}.json {collection_name} {document_name}
+* Make json file to upload and run.   
+  Format should be ```python {execution}.py {key}.json {upload_file}.json {collection_name} {document_name}```
 ```
-python simple-firestore-import.py p4ds-a0e74-firebase-adminsdk-5tp4l-ef9265d951.json scalp_ml4.json scalp_ml 20231204
+python simple-firestore-import.py {key}.json scalp_ml4.json scalp_ml 20231204
 ```
 Reference from : https://github.com/RobinCheptileh/simple-firestore-import
  
-## Modeling
+## Models
+### 1) EfficientNet
+* Move to the folder:
+```
+cd scalp
+```
+* Install Dependencies
+```
+conda create -n {env_name} python=3.7.9
+conda activate {env_name}
+```
+* Run is scalp model to detect if the image is scalp.
+```
+python is_scalp.py
+```
+* Run scalp image classification model
+```
+python scalp.py
+```
+
 ### 2) GAN
 * Move to the folder:
 ```
-cd Style-Your-Hair
+cd hairline
 ```
 * Install Dependencies
 ```
@@ -76,7 +105,7 @@ conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cudatoolkit=11
 pip install face_alignment face-recognition gdown ipython matplotlib
 ```
 * Put your own image into ```./ffhq_images/``` folder as the name ```input.png```.
- 
+
 * Run
 You can modify the name ```input.png``` to your image file name.
 ```
@@ -99,7 +128,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Back-end
 
 
 
