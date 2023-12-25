@@ -1,7 +1,9 @@
 # HHH - Have Healthy Hair 
 > 2023 Fall - Project for Data Science of GSDS   
 > Make application from A to Z   
-> Total cost : ₩419,788.38
+> Total cost : ₩419,788.38  
+
+![main2](https://github.com/p4dsG4/have-healthy-hair/assets/85481704/9cbf8bb2-7f21-41c1-8675-56de3050dc09)
 
 ## Team Member 
 Sangwoo Heo(PO, DevOPs), Seungju Lee(ML Expert), Sunyoung Park(UI/UX Designer, Front-end),    
@@ -13,7 +15,7 @@ Process | Tools | Detail
 Compute Engine | <img src="https://img.shields.io/badge/Googlecloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"> | **Stroage** :SCSI, 250GB, x86/64 </br> **GPU** :2 x NVIDIA T4 </br> **VM** :n1-standard-4, Intel Broadwell, x86/64 </br> ₩419,488.38
 Networking | <img src="https://img.shields.io/badge/Googlecloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"> | IPv4, Premium </br> ₩3,103
 UX Design | <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"> | [Design Link](https://www.figma.com/file/6QfBEA8ks5tb51J2z9t3ns/P4DS?type=design&node-id=2-666&mode=design&t=CL3pvZ3CaWQ2zOl5-0)
-Modeling | <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> | **EfficientNet** </br> **GAN**
+Modeling | <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> | -
 Front-end | <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=Flutter&logoColor=white"> <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white">| personal expenses
 Database | <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"> | less than ₩100
 Back-end | <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white"> | API 
@@ -23,14 +25,13 @@ Back-end | <img src="https://img.shields.io/badge/Flask-000000?style=for-the-bad
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
   <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white">
 </p>
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
 
 ## Project Introduction
 * **Target** : Who have concerns about hair and scalp.     
 * **Function** : It diagnoses the condition of the scalp based on a photo and recommends appropriate products and clinics.       
 It records the condition of the scalp seasonally, allowing tracking by period.    
 When the records accumulate, it goes further by predicting hair loss in the future.   
-* **Demo** : Visit [HERE]() to see our demo.
+* **Demo** : Visit [HERE](https://drive.google.com/file/d/1snh787RhBD-a7VbdnNg9YhhoU_UEtSzK/view?usp=sharing) to see our demo.
 * **Test**    
 ※ The process below is just written as record.    
 Whole process cannot be simulated exactly, because this repo is not developed for simulation.   
@@ -38,29 +39,43 @@ Whole process cannot be simulated exactly, because this repo is not developed fo
 * clone the repository:
 ```
 git clone https://github.com/p4dsG4/have-healthy-hair.git
-cd HHH
 ```
 
-* Install Dependencies
-```
-conda env create -f requirements.yaml
-conda activate {YOUR_ENV_NAME}
-```
+## Code Structure   
+* ```/HHH```
+  * ```/functions``` : Back-end.
+  * ```/generator``` : Back-end.
+  * ```/hairline``` : Hairline prediction generation.
+  * ```/recommender``` : Collborative Filtering recommendation.
+  * ```/scalp``` : Classifying Scalp or Not & Classifying Scalp condition.
+
+* ```/front``` : Front-end flutter code based on dart. 
+* ```/simple-firestore-import``` : Making database.
+
 # Demo
 ## Front-end
-* Mainuplate Flutter
+* Mainuplate Flutter in ```/front``` folder
+```
+cd front
+```
+Reference from : 
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
 
 ## Back-end
-The ```app.py``` must be running when using the app.
+* The ```app.py``` must be running when using the app.
 ```
+cd HHH
 python app.py
 ```
 
 # Step by Step
-## Database
-**Uploading json file to firestore**
-* Move to the directory and install dependencies
+## 1. Database
+* Move to the directory and install dependencies.
 ```
 cd simple-firestore-import
 pip install -r requirements.txt
@@ -72,7 +87,7 @@ python simple-firestore-import.py {key}.json scalp_ml4.json scalp_ml 20231204
 ```
 Reference from : https://github.com/RobinCheptileh/simple-firestore-import
  
-## Models
+## 2. Models
 ### 1) EfficientNet
 * Move to the folder:
 ```
@@ -116,20 +131,16 @@ python main.py --input_dir ./ffhq_image/ --im_path1 source.png --im_path2 44894.
 ```
 Reference from https://github.com/Taeu/Style-Your-Hair
 
-## Front-end
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-
-
+### 3) Collaborative Filtering
+* Move to the folder
+```
+cd recommender
+```
 
 ## Reference
-https://github.com/Taeu/Style-Your-Hair
+https://docs.flutter.dev/get-started/codelab   
+https://docs.flutter.dev/cookbook    
+https://docs.flutter.dev/    
+https://github.com/Taeu/Style-Your-Hair    
+https://github.com/RobinCheptileh/simple-firestore-import
+
