@@ -1,0 +1,12 @@
+version: '3'
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: p4ds.Dockerfile  # Replace with your Dockerfile name if different
+    ports:
+      - "5000:5000"  # Map port 5000 of the container to port 5000 on the host
+    environment:
+      - FLASK_ENV=development  # Set environment variables (if needed)
+    volumes:
+      - .:/app  # Mount the current directory in the host to /app in the container

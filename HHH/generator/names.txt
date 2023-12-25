@@ -1,0 +1,15 @@
+허상우 M 33 Seborrheic 1
+이채은 F 27 Seborrheic 2
+이승주 M 33 Hairloss 1
+박선영 F 39 Hairloss 3
+이명주 F 29 Sensitive 2
+조유진 F 30 Sensitive 0
+김채윤 F 45 Good 1
+이상익 M 61 Good 2
+김병우 M 50 Inflammatory 0
+최재필 M 13 Inflammatory 1
+박민우 M 27 Dandruff 1
+최희진 F 26 Dandruff 2
+송경아 F 36 Oily 1
+김정국 M 19 Oily 2
+권성민 M 36 Dry 1
