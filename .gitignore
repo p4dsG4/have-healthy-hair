@@ -75,3 +75,4 @@ scalp/temp/
 # ignore model checkpoint 
 *.pt
 *.pth
+!HHH/scalp/model_pt/aram_model0.pth
