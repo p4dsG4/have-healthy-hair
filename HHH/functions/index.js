@@ -1,9 +1,9 @@
 const {initializeApp, cert} = require("firebase-admin/app");
 // const {getStorage} = require("firebase-admin/storage");
 const serviceAccount = require(
-    "./p4ds-a0e74-firebase-adminsdk-5tp4l-ef9265d951.json");
+    "./{certificate}.json");
 
-initializeApp({credential: cert(serviceAccount), storageBucket: "p4ds-a0e74.appspot.com"});
+initializeApp({credential: cert(serviceAccount), storageBucket: "{bucket}.appspot.com"});
 // const bucket = getStorage().bucket();
 const functions = require("firebase-functions");
 const axios = require("axios");
@@ -15,7 +15,7 @@ exports.detectNewHairlineImage = functions.storage.object().onFinalize(async (ob
     const bucketName = object.bucket; // 버킷 이름
 
     // Flask 서버의 REST API 엔드포인트 URL (예시: "http://example.com:5000/notify-upload")
-    const flaskEndpoint = "http://35.201.198.18:5000/process-hairline-image";
+    const flaskEndpoint = "http://{address}/process-hairline-image";
 
     try {
       const response = await axios.post(flaskEndpoint, {
@@ -36,7 +36,7 @@ exports.detectNewScalpImage = functions.storage.object().onFinalize(async (objec
     const bucketName = object.bucket; // 버킷 이름
 
     // Flask 서버의 REST API 엔드포인트 URL (예시: "http://example.com:5000/notify-upload")
-    const flaskEndpoint = "http://35.201.198.18:5000/process-scalp-image";
+    const flaskEndpoint = "http://{address}/process-scalp-image";
 
     try {
       const response = await axios.post(flaskEndpoint, {
@@ -57,7 +57,7 @@ exports.userSurveyToRecommender = functions.storage.object().onFinalize(async (o
     const bucketName = object.bucket; // 버킷 이름
 
     // Flask 서버의 REST API 엔드포인트 URL (예시: "http://example.com:5000/notify-upload")
-    const flaskEndpoint = "http://35.201.198.18:5000/process-recommender";
+    const flaskEndpoint = "http://{address}/process-recommender";
 
     try {
       const response = await axios.post(flaskEndpoint, {
