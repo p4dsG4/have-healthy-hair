@@ -13,8 +13,8 @@ PATH = os.getcwd()
 def hairline_pred_run(input_image):
 #     # 3. main.py 실행
     subprocess.run([
-        'python', 'hairline/main.py',          # 폴더 경로 수정 1130 sh10hsw
-        '--input_dir', 'hairline/ffhq_image/', # 폴더 경로 수정 1130 sh10hsw
+        'python', 'hairline/main.py',          
+        '--input_dir', 'hairline/ffhq_image/', 
         '--im_path1', 'source.png', 
         '--im_path2', 'target.png',
         '--output_dir', 'hairline/outputs/',
