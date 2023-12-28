@@ -1,0 +1,45 @@
+[
+    {
+      "Back" :{
+      "Condition": "Good",
+      "Type1": 3,
+      "Type2": 0,
+      "Type3": 1,
+      "Type4": 1,
+      "Type5": 1,
+      "Type6": 0,
+      "image": "user1/Scalp/back_20231204.png"
+      },
+      "Left" :{
+        "Condition": "Good",
+        "Type1": 0,
+        "Type2": 1,
+        "Type3": 0,
+        "Type4": 2,
+        "Type5": 2,
+        "Type6": 1,
+        "image": "user1/Scalp/left_20231204.png"
+        },
+      "Right" :{
+        "Condition": "Good",
+        "Type1": 3,
+        "Type2": 1,
+        "Type3": 0,
+        "Type4": 1,
+        "Type5": 0,
+        "Type6": 0,
+        "image": "user1/Scalp/right_20231204.png"
+        },
+      "Top" :{
+        "Condition": "Good",
+        "Type1": 1,
+        "Type2": 2,
+        "Type3": 0,
+        "Type4": 2,
+        "Type5": 1,
+        "Type6": 0,
+        "image": "user1/Scalp/top_20231204.png"
+        },
+      "Time" : "2022-12-04 18:10:02"
+    }
+  ]
