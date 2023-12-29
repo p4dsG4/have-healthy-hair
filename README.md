@@ -1,6 +1,6 @@
 # HHH - Have Healthy Hair 
 > 2023 Fall - Project for Data Science of GSDS   
-> Full-stack development
+> Full-stack development    
 > Total cost : ₩419,788.38  
 
 ![main2](https://github.com/p4dsG4/have-healthy-hair/assets/85481704/9cbf8bb2-7f21-41c1-8675-56de3050dc09)
