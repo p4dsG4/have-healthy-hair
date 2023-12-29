@@ -1,13 +1,13 @@
 # HHH - Have Healthy Hair 
 > 2023 Fall - Project for Data Science of GSDS   
-> Make application from A to Z   
+> Full-stack development
 > Total cost : ₩419,788.38  
 
 ![main2](https://github.com/p4dsG4/have-healthy-hair/assets/85481704/9cbf8bb2-7f21-41c1-8675-56de3050dc09)
 
 ## Team Member 
 Sangwoo Heo(PO, DevOPs), Seungju Lee(ML Expert), Sunyoung Park(UI/UX Designer, Front-end),    
-Chaieun Lee(Data engineer, ML Expert), Myungjoo Lee(Dev Engineer, ML Expert)
+Chaieun Lee(Data engineer, ML Expert), Myungjoo Lee(Data Engineer, ML Expert)
 
 ## Process and Stacks 
 Process | Tools | Detail
